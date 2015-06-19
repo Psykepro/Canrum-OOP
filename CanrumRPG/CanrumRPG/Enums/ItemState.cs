@@ -1,4 +1,4 @@
-﻿namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Enums
 {
     public enum ItemState
     {

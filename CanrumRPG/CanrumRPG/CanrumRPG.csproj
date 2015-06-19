@@ -62,8 +62,10 @@
     <Compile Include="Interfaces\IMoveable.cs" />
     <Compile Include="Interfaces\IRenderer.cs" />
     <Compile Include="Interfaces\ISkillModifiers.cs" />
+    <Compile Include="Items\Consumable.cs" />
+    <Compile Include="Items\Equipable.cs" />
     <Compile Include="Items\Item.cs" />
-    <Compile Include="Items\ItemState.cs" />
+    <Compile Include="Enums\ItemState.cs" />
     <Compile Include="Engine\Position.cs" />
     <Compile Include="CanrumRPG.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
