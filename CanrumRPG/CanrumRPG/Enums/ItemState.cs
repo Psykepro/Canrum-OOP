@@ -3,6 +3,7 @@
     public enum ItemState
     {
         Available,
-        Collected
+        Collected,
+        Equiped
     }
 }

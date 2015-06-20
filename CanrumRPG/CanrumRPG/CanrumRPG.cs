@@ -14,7 +14,6 @@
             GameEngine engine = new GameEngine(reader, renderer);
 
             engine.Run();
-
         }
     }
 }
