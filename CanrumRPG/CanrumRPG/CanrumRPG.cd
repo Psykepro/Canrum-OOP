@@ -1,69 +1,234 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="SuperRpgGame.Characters.Character" Collapsed="true">
-    <Position X="5.5" Y="1.75" Width="1.5" />
+  <Class Name="CanrumRPG.Attributes.EnemyAttribute" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACACAAAAAAAAAAAAAAAQAAIAEAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Attributes\EnemyAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanrumRPG.CanrumRPG" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>CanrumRPG.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanrumRPG.GameObject" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAIAQABAAEAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanrumRPG.Characters.Character" Collapsed="true">
+    <Position X="6.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAIAEAAAQAACAAAAAAAAAQAAIQEAJAgAAIAAiAAIBk=</HashCode>
       <FileName>Characters\Character.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="SuperRpgGame.Characters.Fairy" Collapsed="true">
-    <Position X="3.25" Y="3.25" Width="1.5" />
+  <Class Name="CanrumRPG.Characters.Npc" Collapsed="true">
+    <Position X="5.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABAAAAA=</HashCode>
-      <FileName>Characters\Fairy.cs</FileName>
+      <HashCode>AgAAAAAAAAAAAAAACAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Characters\NPC.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SuperRpgGame.Characters.Ninja" Collapsed="true">
-    <Position X="5.5" Y="3.25" Width="1.5" />
+  <Class Name="CanrumRPG.Characters.Player" Collapsed="true">
+    <Position X="7.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Characters\Ninja.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SuperRpgGame.Characters.Ork" Collapsed="true">
-    <Position X="7.75" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABAAAAAAAAABAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Characters\Ork.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SuperRpgGame.Characters.Player" Collapsed="true">
-    <Position X="10" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAAAAAQAAIAAAADEAAAAAAAAAAAAAAACAAAAAgAAAAA=</HashCode>
+      <HashCode>AgAAAAAAAIgAAAAECAAAAAAACAAAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>Characters\Player.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="SuperRpgGame.Characters.Troll" Collapsed="true">
-    <Position X="1" Y="3.25" Width="1.5" />
+  <Class Name="CanrumRPG.Engine.GameEngine" Collapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAgAAAAAAEAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
-      <FileName>Characters\Troll.cs</FileName>
+      <HashCode>gIBAAQAAAiAAIAAAIEgAQQACAUABACgBAAAAEABQkBI=</HashCode>
+      <FileName>Engine\GameEngine.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SuperRpgGame.GameObject" Collapsed="true">
-    <Position X="6.5" Y="0.5" Width="1.5" />
+  <Class Name="CanrumRPG.Exceptions.NotEnoughBeerException" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEAAAAgAAAAIAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
-      <FileName>GameObject.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\NotEnoughBeerException.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SuperRpgGame.Items.Beer" Collapsed="true">
-    <Position X="12.25" Y="3.25" Width="1.5" />
+  <Class Name="CanrumRPG.Exceptions.ObjectOutOfBoundsException" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAgAACAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Items\Beer.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ObjectOutOfBoundsException.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SuperRpgGame.Items.Item" Collapsed="true">
-    <Position X="12.25" Y="1.75" Width="1.5" />
+  <Class Name="CanrumRPG.Items.Consumable" Collapsed="true">
+    <Position X="0.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Items\Consumable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanrumRPG.Items.Equipable" Collapsed="true">
+    <Position X="3" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Items\Equipable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanrumRPG.Items.Item" Collapsed="true">
+    <Position X="1.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAgAAAAAAAAAAABCAAAAAAAQAAAAAAIAA=</HashCode>
       <FileName>Items\Item.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
-  <Font Name="Segoe UI" Size="9" />
+  <Class Name="CanrumRPG.Skills.ActiveSkill" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAMAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Skills\ActiveSkill.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanrumRPG.Skills.PassiveSkill" Collapsed="true">
+    <Position X="2.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Skills\PassiveSkill.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanrumRPG.Skills.Skill" Collapsed="true">
+    <Position X="1.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAgAAAgAAAAAAAAAAAACAAAAAAAQAAAAAAIAA=</HashCode>
+      <FileName>Skills\Skill.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CanrumRPG.UI.ConsoleInputReader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\ConsoleInputReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CanrumRPG.UI.ConsoleRenderer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>UI\ConsoleRenderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Struct Name="CanrumRPG.Engine.Position" Collapsed="true">
+    <Position X="10.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>Engine\Position.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="CanrumRPG.Interfaces.IAttack" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAIAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAACAAAAE=</HashCode>
+      <FileName>Interfaces\IAttack.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CanrumRPG.Interfaces.ICharacter" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ICharacter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CanrumRPG.Interfaces.IInventory" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Interfaces\IInventory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CanrumRPG.Interfaces.ILive" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ILive.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CanrumRPG.Interfaces.IMana" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAIAA=</HashCode>
+      <FileName>Interfaces\IMana.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CanrumRPG.Interfaces.IMoveable" Collapsed="true">
+    <Position X="10.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IMoveable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CanrumRPG.Interfaces.IReader" Collapsed="true">
+    <Position X="12.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IReader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CanrumRPG.Interfaces.IRenderer" Collapsed="true">
+    <Position X="14" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Interfaces\IRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CanrumRPG.Interfaces.ISkillModifiers" Collapsed="true">
+    <Position X="10.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAgAAAAAAAAAAAACAAAAAAAQAAAAAAIAA=</HashCode>
+      <FileName>Interfaces\ISkillModifiers.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="CanrumRPG.Enums.CharClass" Collapsed="true">
+    <Position X="10.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAACAAAAAAAAAAAAAQAAAAAAIAAAA=</HashCode>
+      <FileName>Enums\CharClass.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CanrumRPG.Enums.ItemState" Collapsed="true">
+    <Position X="12.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\ItemState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CanrumRPG.Enums.MapMarkers" Collapsed="true">
+    <Position X="14" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBEAAA=</HashCode>
+      <FileName>Enums\MapMarkers.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CanrumRPG.Enums.Race" Collapsed="true">
+    <Position X="10.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAIAAAgAAAIAAQAAAA=</HashCode>
+      <FileName>Enums\Race.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CanrumRPG.Enums.Skills" Collapsed="true">
+    <Position X="12.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\Skills.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
 </ClassDiagram>
