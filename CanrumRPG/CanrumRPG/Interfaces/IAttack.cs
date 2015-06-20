@@ -1,5 +1,7 @@
 ﻿namespace CanrumRPG.Interfaces
 {
+    using System;
+
     using Characters;
 
     public interface IAttack
@@ -12,6 +14,6 @@
 
         int BlockChance { get; set; }
         
-        void Attack(Character target);
+        void Attack(Character target, Random rnd);
     }
 }

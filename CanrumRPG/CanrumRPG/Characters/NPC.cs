@@ -6,6 +6,9 @@
     using Engine;
     using Enums;
 
+    using Attributes;
+
+    [Enemy]
     public class Npc : Character
     {
         private readonly List<Skills> passiveSkills;

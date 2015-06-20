@@ -2,7 +2,7 @@
 {
     using System;
 
-    using global::CanrumRPG.Interfaces;
+    using Interfaces;
 
     public class ConsoleRenderer : IRenderer
     {

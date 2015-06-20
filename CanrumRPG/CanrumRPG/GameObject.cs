@@ -52,7 +52,7 @@
             {
                 if (value.X < 0 
                     || value.Y < 0 
-                    || value.X >= GameEngine.MapWidth 
+                    || value.X >= GameEngine.MapWidth
                     || value.Y >= GameEngine.MapHeight)
                 {
                     throw new ObjectOutOfBoundsException("Specified coordinates are outside map.");
@@ -66,15 +66,21 @@
         {
             get
             {
+                MapMarkers marker = default(MapMarkers);
                 switch (this.mapMarker)
                 {
                     case 'P':
-                        return MapMarkers.P;
+                        marker = MapMarkers.P;
+                        break;
                     case 'E':
-                        return MapMarkers.E;
+                        marker = MapMarkers.E;
+                        break;
                     case 'T':
-                        return MapMarkers.T;
+                        marker = MapMarkers.T;
+                        break;
                 }
+
+                return marker;
             }
 
             set

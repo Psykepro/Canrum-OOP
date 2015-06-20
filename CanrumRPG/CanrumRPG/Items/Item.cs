@@ -4,9 +4,9 @@
     using Enums;
     using Interfaces;
 
-    public abstract class Item : GameObject, ISkillModifiers
+    public class Item : GameObject, ISkillModifiers
     {
-        protected Item(Position position, string name, int attackModifier, int defenseModifier, int healthModifier, int manaModifier, Skills type)
+        protected internal Item(Position position, string name, int attackModifier, int defenseModifier, int healthModifier, int manaModifier, Skills type)
             : base(position, MapMarkers.T, name)
         {
             this.ItemState = ItemState.Available;

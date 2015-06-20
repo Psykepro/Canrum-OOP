@@ -7,16 +7,20 @@
     using System.Reflection;
     using System.Text;
 
-    using global::CanrumRPG.Interfaces;
+    using Attributes;
+
+    using Characters;
+
+    using Enums;
+
+    using Exceptions;
+
+    using Interfaces;
+
+    using Items;
 
     public class GameEngine
     {
-        public const int MapWidth = 5;
-        public const int MapHeight = 5;
-
-        private const int InitialNumberOfEnemies = 2;
-        private const int InitialNumberOfBeers = 5;
-
         private static readonly Random Rand = new Random();
 
         private readonly IReader reader;
@@ -38,7 +42,11 @@
 
         private readonly IList<GameObject> characters;
         private readonly IList<GameObject> items;
-        private IPlayer player;
+
+        private int initialNumberOfEnemies;
+        private int initialNumberOfTreasures;
+
+        private Player player;
 
         public GameEngine(IReader reader, IRenderer renderer)
         {
@@ -48,16 +56,23 @@
             this.items = new List<GameObject>();
         }
 
+        public static int MapWidth { get; set; }
+
+        public static int MapHeight { get; set; }
+
         public bool IsRunning { get; private set; }
 
         public void Run()
         {
             this.IsRunning = true;
 
-            var playerName = this.GetPlayerName();
-            PlayerRace race = this.GetPlayerRace();
+            this.SetMapSize();
 
-            this.player = new Player(new Position(0, 0), 'P', playerName, race);
+            var playerName = this.GetPlayerName();
+            Race race = this.GetPlayerRace();
+            CharClass charClass = this.GetPlayerClass();
+
+            this.player = new Player(playerName, race, charClass);
 
             this.PopulateEnemies();
             this.PopulateItems();
@@ -91,6 +106,22 @@
             }
         }
 
+        private void SetMapSize()
+        {
+            int size;
+            this.renderer.WriteLine("Set map size(choose a number between 10 and 40):");
+            bool success = int.TryParse(this.reader.ReadLine(), out size);
+
+            while (!success)
+            {
+                this.renderer.WriteLine("Map size should be a number between 10 and 40. Please, re-enter:");
+                success = int.TryParse(this.reader.ReadLine(), out size);
+            }
+
+            GameEngine.MapWidth = size;
+            GameEngine.MapHeight = size;
+        }
+
         private void ExecuteCommand(string command)
         {
             switch (command)
@@ -109,10 +140,6 @@
                     break;
                 case "status":
                     this.ShowStatus();
-                    break;
-                case "heal":
-                    this.player.Heal();
-                    this.renderer.WriteLine("Healed!");
                     break;
                 case "clear":
                     this.renderer.Clear();
@@ -139,12 +166,12 @@
         {
             this.player.Move(command);
 
-            ICharacter enemy =
-                this.characters.Cast<ICharacter>()
+            Character enemy =
+                this.characters.Cast<Character>()
                 .FirstOrDefault(
                     e => e.Position.X == this.player.Position.X 
                         && e.Position.Y == this.player.Position.Y 
-                        && e.Health > 0);
+                        && e.CurrentHealth > 0);
 
             if (enemy != null)
             {
@@ -152,38 +179,65 @@
                 return;
             }
 
-            Item beer =
+            Item item =
                 this.items.Cast<Item>()
                 .FirstOrDefault(
                     e => e.Position.X == this.player.Position.X 
                         && e.Position.Y == this.player.Position.Y 
                         && e.ItemState == ItemState.Available);
 
-            if (beer != null)
+            if (item != null)
             {
-                this.player.AddItemToInventory(beer);
-                beer.ItemState = ItemState.Collected;
-                this.renderer.WriteLine("Beer collected!");
+                this.player.Inventory.Add(item);
+                item.ItemState = ItemState.Collected;
+                this.renderer.WriteLine("Treasure collected!");
             }
         }
 
-        private void EnterBattle(ICharacter enemy)
+        private void EnterBattle(Character enemy)
         {
-            this.player.Attack(enemy);
+            this.renderer.WriteLine(string.Format("You encounter a {0}{1}!", enemy.Race, enemy.CharClass));
+            this.renderer.WriteLine(string.Format("I'm {0}! I will crush you!", enemy.Name));
 
-            if (enemy.Health <= 0)
+            int round = 1;
+            while (true)
             {
-                this.renderer.WriteLine("Enemy killed!");
-                this.characters.Remove(enemy as GameObject);
-                return;
+                this.renderer.WriteLine(string.Format("Round {0}", round));
+                this.renderer.WriteLine("Attack or use skill!");
+                string command = this.reader.ReadLine();
+
+                this.ExecuteBattleCommand(command, enemy);
+
+                if (enemy.CurrentHealth <= 0)
+                {
+                    this.renderer.WriteLine("Enemy killed!");
+                    this.characters.Remove(enemy);
+                    break;
+                }
+
+                enemy.Attack(this.player, Rand);
+
+                if (this.player.CurrentHealth <= 0)
+                {
+                    this.IsRunning = false;
+                    this.renderer.WriteLine("You're dead!");
+                    break;
+                }
+
+                round++;
             }
+            
+        }
 
-            enemy.Attack(this.player);
-
-            if (this.player.Health <= 0)
+        private void ExecuteBattleCommand(string command, Character enemy)
+        {
+            switch (command)
             {
-                this.IsRunning = false;
-                this.renderer.WriteLine("You dead!");
+                case "attack":
+                    this.player.Attack(enemy, Rand);
+                    break;
+                default:
+                    throw new ArgumentException("Unknown command", "command");
             }
         }
 
@@ -191,22 +245,22 @@
         {
             StringBuilder sb = new StringBuilder();
 
-            for (int row = 0; row < MapHeight; row++)
+            for (int row = 0; row < GameEngine.MapHeight; row++)
             {
-                for (int col = 0; col < MapWidth; col++)
+                for (int col = 0; col < GameEngine.MapWidth; col++)
                 {
                     if (this.player.Position.X == col && this.player.Position.Y == row)
                     {
-                        sb.Append('P');
+                        sb.Append(this.player.MapMarker);
                         continue;
                     }
 
                     var character =
                          this.characters
-                         .Cast<ICharacter>()
+                         .Cast<Character>()
                          .FirstOrDefault(c => c.Position.X == col 
                              && c.Position.Y == row 
-                             && c.Health > 0);
+                             && c.CurrentHealth > 0);
 
                     var item = this.items
                         .Cast<Item>()
@@ -220,12 +274,12 @@
                     }
                     else if (character != null)
                     {
-                        var ch = character as GameObject;
+                        var ch = (GameObject)character;
                         sb.Append(ch.MapMarker);
                     }
                     else
                     {
-                        sb.Append(item.ObjectSymbol);
+                        sb.Append(item.MapMarker);
                     }
                 }
 
@@ -242,25 +296,51 @@
             this.renderer.WriteLine(helpInfo);
         }
 
-        private PlayerRace GetPlayerRace()
+        private CharClass GetPlayerClass()
         {
-            this.renderer.WriteLine("Choose a race:");
-            this.renderer.WriteLine("1. Elf (damage: 300, health: 100)");
-            this.renderer.WriteLine("2. Archangel (damage: 250, health: 150)");
-            this.renderer.WriteLine("3. Hulk (damage: 350, health: 75)");
-            this.renderer.WriteLine("4. Alcoholic (damage: 200, health: 200)");
+            this.renderer.WriteLine("Choose a class:");
+            this.renderer.WriteLine("Mage (+50% Maximum mana, +100% Critical strike chance)");
+            this.renderer.WriteLine("Priest (+50% Maximum mana, +50% Maximum health)");
+            this.renderer.WriteLine("Rogue (+50% Attack rating, +100% Critical strike chance)");
+            this.renderer.WriteLine("Warrior (+50% Defense rating, +100% Block chance)");
 
             string choice = this.reader.ReadLine();
 
-            string[] validChoises = { "1", "2", "3", "4" };
+            string[] validChoices = { "Mage", "Priest", "Rogue", "Warrior" };
 
-            while (!validChoises.Contains(choice))
+            while (!validChoices.Contains(choice))
             {
                 this.renderer.WriteLine("Invalid choice of race, please re-enter.");
                 choice = this.reader.ReadLine();
             }
 
-            PlayerRace race = (PlayerRace)int.Parse(choice);
+            CharClass charClass;
+            Enum.TryParse(choice, true, out charClass);
+
+            return charClass;
+        }
+
+        private Race GetPlayerRace()
+        {
+            this.renderer.WriteLine("Choose a race:");
+            this.renderer.WriteLine("Elf (+50% Attack rating)");
+            this.renderer.WriteLine("Orc (+50% Maximum health)");
+            this.renderer.WriteLine("Human (+100% Critical strike chance)");
+            this.renderer.WriteLine("Undead (+50% Maximum mana)");
+            this.renderer.WriteLine("Goblin (+50% Defense rating)");
+
+            string choice = this.reader.ReadLine();
+
+            string[] validChoices = { "Elf", "Orc", "Human", "Undead", "Goblin" };
+
+            while (!validChoices.Contains(choice))
+            {
+                this.renderer.WriteLine("Invalid choice of race, please re-enter.");
+                choice = this.reader.ReadLine();
+            }
+
+            Race race;
+            Enum.TryParse(choice, true, out race);
 
             return race;
         }
@@ -281,61 +361,44 @@
 
         private void PopulateItems()
         {
-            for (int i = 0; i < InitialNumberOfBeers; i++)
+            this.initialNumberOfTreasures = GameEngine.MapWidth * GameEngine.MapHeight * 15 / 100;
+            for (int i = 0; i < this.initialNumberOfTreasures; i++)
             {
-                Item beer = this.CreateItem();
-                this.items.Add(beer);
+                Item item = this.CreateItem();
+                this.items.Add(item);
             }
         }
 
         private Item CreateItem()
         {
-            int currentX = Rand.Next(1, MapWidth);
-            int currentY = Rand.Next(1, MapHeight);
+            int currentX = Rand.Next(1, GameEngine.MapWidth);
+            int currentY = Rand.Next(1, GameEngine.MapHeight);
 
             bool containsEnemy = this.characters
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);
 
-            bool containsBeer = this.items
+            bool containsItem = this.items
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);
 
-            while (containsEnemy || containsBeer)
+            while (containsEnemy || containsItem)
             {
-                currentX = Rand.Next(1, MapWidth);
-                currentY = Rand.Next(1, MapHeight);
+                currentX = Rand.Next(1, GameEngine.MapWidth);
+                currentY = Rand.Next(1, GameEngine.MapHeight);
 
                 containsEnemy = this.characters
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);
 
-                containsBeer = this.items
+                containsItem = this.items
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);
             }
 
-            int beerType = Rand.Next(0, 3);
-
-            BeerSize beerSize;
-
-            switch (beerType)
-            {
-                case 0:
-                    beerSize = BeerSize.Small;
-                    break;
-                case 1:
-                    beerSize = BeerSize.Medium;
-                    break;
-                case 2:
-                    beerSize = BeerSize.Large;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("beerType", "Invalid beer type.");
-            }
-
-            return new Beer(new Position(currentX, currentY), beerSize);
+            return new Item(new Position(currentX, currentY), "some item", Rand.Next(20), Rand.Next(20), Rand.Next(20), Rand.Next(20), Skills.Passive);
         }
 
         private void PopulateEnemies()
         {
-            for (int i = 0; i < InitialNumberOfEnemies; i++)
+            this.initialNumberOfEnemies = GameEngine.MapHeight * GameEngine.MapWidth * 15 / 100;
+            for (int i = 0; i < this.initialNumberOfEnemies; i++)
             {
                 GameObject enemy = this.CreateEnemy();
                 this.characters.Add(enemy);
@@ -344,16 +407,16 @@
 
         private GameObject CreateEnemy()
         {
-            int currentX = Rand.Next(1, MapWidth);
-            int currentY = Rand.Next(1, MapHeight);
+            int currentX = Rand.Next(1, GameEngine.MapWidth);
+            int currentY = Rand.Next(1, GameEngine.MapHeight);
 
             bool containsEnemy = this.characters
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);
 
             while (containsEnemy)
             {
-                currentX = Rand.Next(1, MapWidth);
-                currentY = Rand.Next(1, MapHeight);
+                currentX = Rand.Next(1, GameEngine.MapWidth);
+                currentY = Rand.Next(1, GameEngine.MapHeight);
 
                 containsEnemy = this.characters
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);

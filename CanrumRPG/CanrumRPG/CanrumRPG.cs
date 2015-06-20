@@ -4,7 +4,7 @@
     using global::CanrumRPG.Interfaces;
     using global::CanrumRPG.UI;
 
-    public class CanrumRPG
+    public static class CanrumRPG
     {
         public static void Main()
         {

@@ -1,11 +1,17 @@
-﻿namespace CanrumRPG.Characters
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Character.cs" company="">
+//   
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+namespace CanrumRPG.Characters
 {
     using System;
     using System.Collections.Generic;
-    using Engine;
-    using Enums;
-    using Interfaces;
-    using Items;
+
+    using global::CanrumRPG.Engine;
+    using global::CanrumRPG.Enums;
+    using global::CanrumRPG.Interfaces;
+    using global::CanrumRPG.Items;
 
     public abstract class Character : GameObject, ICharacter
     {
@@ -51,29 +57,23 @@
 
         public List<Item> Inventory { get; set; }
 
-        private CharClass CharClass { get; set; }
+        public CharClass CharClass { get; set; }
 
-        private Race Race { get; set; }
+        public Race Race { get; set; }
 
-        public void Attack(Character target)
+        public void Attack(Character target, Random rnd)
         {
-            Random rnd = new Random();
             int crit = rnd.Next(1, 101);
             int block = rnd.Next(1, 101);
 
-            if (block <= target.BlockChance)
+            if (block > target.BlockChance)
             {
-                goto Finish;
+                int dmg = this.AttackRating - target.DefenseRating;
+
+                dmg *= crit <= this.CritChance ? 2 : 1;
+
+                target.CurrentHealth -= dmg;
             }
-
-            int dmg = this.AttackRating - target.DefenseRating;
-
-            dmg *= crit <= this.CritChance ? 2 : 1;
-
-            target.CurrentHealth -= dmg;
-
-            Finish:
-            ;
         }
         
         private void SetInitialStats(Race race, CharClass charClass, bool player)
@@ -100,39 +100,39 @@
             switch (race)
             {
                 case Race.Elf:
-                    this.AttackRating += Ar / (int)Race.Elf;
+                    this.AttackRating += Ar / 2;
                     break;
                 case Race.Orc:
-                    this.MaxHealth += Mh / (int)Race.Orc;
+                    this.MaxHealth += Mh / 2;
                     break;
                 case Race.Human:
-                    this.CritChance *= (int)Race.Human;
+                    this.CritChance *= 2;
                     break;
                 case Race.Undead:
-                    this.MaxMana += Mm / (int)Race.Elf;
+                    this.MaxMana += Mm / 2;
                     break;
                 case Race.Goblin:
-                    this.DefenseRating += Dr / (int)Race.Goblin;
+                    this.DefenseRating += Dr / 2;
                     break;
             }
 
             switch (charClass)
             {
                 case CharClass.Mage:
-                    this.MaxMana += Mm / (int)CharClass.Mage;
-                    this.CritChance *= (int)CharClass.Mage;
+                    this.MaxMana += Mm / 2;
+                    this.CritChance *= 2;
                     break;
                 case CharClass.Priest:
-                    this.MaxMana += Mm / (int)CharClass.Priest;
-                    this.MaxHealth += Mh / (int)CharClass.Priest;
+                    this.MaxMana += Mm / 2;
+                    this.MaxHealth += Mh / 2;
                     break;
                 case CharClass.Rogue:
-                    this.CritChance *= (int)CharClass.Rogue;
-                    this.AttackRating += Ar / (int)CharClass.Rogue;
+                    this.CritChance *= 2;
+                    this.AttackRating += Ar / 2;
                     break;
                 case CharClass.Warrior:
-                    this.DefenseRating += Dr / (int)CharClass.Warrior;
-                    this.BlockChance *= (int)CharClass.Warrior;
+                    this.DefenseRating += Dr / 2;
+                    this.BlockChance *= 2;
                     break;
             }
 
