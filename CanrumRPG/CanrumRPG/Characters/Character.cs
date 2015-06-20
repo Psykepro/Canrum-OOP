@@ -23,7 +23,6 @@
 
         private readonly bool isPlayer;
 
-
         protected Character(Position position, MapMarkers mapMarker, string name, Race race, CharClass charClass, bool isPlayer)
             : base(position, mapMarker, name)
         {

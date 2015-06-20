@@ -3,6 +3,8 @@
 -map - displays the map
 -left, right, up, down - player movement
 -status - displays current player status and enemies left
+-[skill name] - uses the specified active skill on the enemy/self
+-attack - uses the basic character attack on the enemy
 -enemies - displays info about enemies on map
 -clear - clears the screen
 -exit - run like a little girl
