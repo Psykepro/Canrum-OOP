@@ -1,12 +1,17 @@
-﻿using CanrumRPG.Characters;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using CanrumRPG.Characters;
 using CanrumRPG.Enums;
 
 namespace CanrumRPG.Skills.MageSkills
 {
-    class SharpIce:ActiveSkill
+    class Meteor:ActiveSkill
     {
-        public SharpIce() 
-            : base(50, 0, 0, 25, CharClass.Mage, 10)
+        public Meteor() 
+            : base(120, 0, 0, 60, CharClass.Mage, 6)
         {
         }
 

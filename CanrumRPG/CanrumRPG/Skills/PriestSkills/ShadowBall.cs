@@ -1,12 +1,17 @@
-﻿using CanrumRPG.Characters;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using CanrumRPG.Characters;
 using CanrumRPG.Enums;
 
 namespace CanrumRPG.Skills.PriestSkills
 {
-    class ShadowSteal:ActiveSkill
+    class ShadowBall:ActiveSkill
     {
-        public ShadowSteal() 
-            : base(30, 0, 20, 20, CharClass.Priest, 6)
+        public ShadowBall()
+            : base(100, 0, 0, 60, CharClass.Priest, 10)
         {
         }
 
@@ -14,7 +19,6 @@ namespace CanrumRPG.Skills.PriestSkills
         {
             caster.CurrentMana -= this.ManaModifier;
             target.CurrentHealth -= this.AttackModifier;
-            caster.CurrentHealth += this.HealthModifier;
         }
     }
 }

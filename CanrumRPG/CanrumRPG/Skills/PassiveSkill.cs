@@ -1,4 +1,6 @@
-﻿namespace CanrumRPG.Skills
+﻿using CanrumRPG.Characters;
+
+namespace CanrumRPG.Skills
 {
     using Enums;
 
@@ -8,5 +10,6 @@
             : base(attackModifier, defenseModifier, healthModifier, manaModifier, Skills.Passive, charClass)
         {
         }
+        protected abstract void ApplySkillStats(Character caster);
     }
 }
