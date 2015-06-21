@@ -23,8 +23,8 @@
     {
         private static readonly Random Rand = new Random();
 
-        internal static readonly IReader Reader;
-        internal static readonly IRenderer Renderer;
+        internal static IReader Reader;
+        internal static IRenderer Renderer;
 
         private readonly string[] characterNames =
         {
@@ -50,8 +50,8 @@
 
         public GameEngine(IReader reader, IRenderer renderer)
         {
-            this.Reader = reader;
-            this.Renderer = renderer;
+            Reader = reader;
+            Renderer = renderer;
             this.characters = new List<GameObject>();
             this.items = new List<GameObject>();
         }
@@ -79,7 +79,7 @@
 
             while (this.IsRunning)
             {
-                string command = this.Reader.ReadLine();
+                string command = Reader.ReadLine().ToLower();
 
                 try
                 {
@@ -87,21 +87,21 @@
                 }
                 catch (ObjectOutOfBoundsException ex)
                 {
-                    this.Renderer.WriteLine(ex.Message);
+                    Renderer.WriteLine(ex.Message);
                 }
                 catch (NotEnoughBeerException ex)
                 {
-                    this.Renderer.WriteLine(ex.Message);
+                    Renderer.WriteLine(ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    this.Renderer.WriteLine(ex.Message);
+                    Renderer.WriteLine(ex.Message);
                 }
 
                 if (this.characters.Count == 0)
                 {
                     this.IsRunning = false;
-                    this.Renderer.WriteLine("Valar morgulis!");
+                    Renderer.WriteLine("Valar morgulis!");
                 }
             }
         }
@@ -109,17 +109,15 @@
         private void SetMapSize()
         {
             int size;
-            this.Renderer.WriteLine("Set map size(choose a number between 10 and 40):");
-            bool success = int.TryParse(this.Reader.ReadLine(), out size);
+            Renderer.WriteLine("Set map size(choose a number between 10 and 40):");
 
-            while (!success)
+            while (!int.TryParse(Reader.ReadLine(), out size))
             {
-                this.Renderer.WriteLine("Map size should be a number between 10 and 40. Please, re-enter:");
-                success = int.TryParse(this.Reader.ReadLine(), out size);
+                Renderer.WriteLine("Map size should be a number between 10 and 40. Please, re-enter:");
             }
 
-            GameEngine.MapWidth = size;
-            GameEngine.MapHeight = size;
+            MapWidth = size;
+            MapHeight = size;
         }
 
         private void ExecuteCommand(string command)
@@ -136,17 +134,17 @@
                 case "right":
                 case "up":
                 case "down":
-                    this.MovePlayer(command);
+                    this.MovePlayer((MoveDirection)Enum.Parse(typeof(MoveDirection), command, true));
                     break;
                 case "status":
                     this.ShowStatus();
                     break;
                 case "clear":
-                    this.Renderer.Clear();
+                    Renderer.Clear();
                     break;
                 case "exit":
                     this.IsRunning = false;
-                    this.Renderer.WriteLine("Bye, noob!");
+                    Renderer.WriteLine("Bye, noob!");
                     break;
                 default:
                     throw new ArgumentException("Unknown command", "command");
@@ -155,16 +153,17 @@
 
         private void ShowStatus()
         {
-            this.Renderer.WriteLine(this.player.ToString());
+            Renderer.WriteLine(this.player.ToString());
 
-            this.Renderer.WriteLine(
+            Renderer.WriteLine(
                 "Number of enemies left: {0}", 
                 this.characters.Count);
         }
 
-        private void MovePlayer(string command)
+        private void MovePlayer(MoveDirection direction)
         {
-            this.player.Move(command);
+
+            this.player.SetPlayerPosition(direction);
 
             Character enemy =
                 this.characters.Cast<Character>()
@@ -190,27 +189,27 @@
             {
                 this.player.Inventory.Add(item);
                 item.ItemState = ItemState.Collected;
-                this.Renderer.WriteLine("Treasure collected!");
+                Renderer.WriteLine("Treasure collected!");
             }
         }
 
         private void EnterBattle(Character enemy)
         {
-            this.Renderer.WriteLine(string.Format("You encounter a {0}{1}!", enemy.Race, enemy.CharClass));
-            this.Renderer.WriteLine(string.Format("I'm {0}! I will crush you!", enemy.Name));
+            Renderer.WriteLine(string.Format("You encounter a {0}{1}!", enemy.Race, enemy.CharClass));
+            Renderer.WriteLine(string.Format("I'm {0}! I will crush you!", enemy.Name));
 
             int round = 1;
             while (true)
             {
-                this.Renderer.WriteLine(string.Format("Round {0}", round));
-                this.Renderer.WriteLine("Attack or use skill!");
-                string command = this.Reader.ReadLine();
+                Renderer.WriteLine(string.Format("Round {0}", round));
+                Renderer.WriteLine("Attack or use skill!");
+                string command = Reader.ReadLine();
 
                 this.ExecuteBattleCommand(command, enemy);
 
                 if (enemy.CurrentHealth <= 0)
                 {
-                    this.Renderer.WriteLine("Enemy killed!");
+                    Renderer.WriteLine("Enemy killed!");
                     this.characters.Remove(enemy);
                     break;
                 }
@@ -220,7 +219,7 @@
                 if (this.player.CurrentHealth <= 0)
                 {
                     this.IsRunning = false;
-                    this.Renderer.WriteLine("You're dead!");
+                    Renderer.WriteLine("You're dead!");
                     break;
                 }
 
@@ -286,74 +285,66 @@
                 sb.AppendLine();
             }
 
-            this.Renderer.WriteLine(sb.ToString());
+            Renderer.WriteLine(sb.ToString());
         }
 
         private void ExecuteHelpCommand()
         {
             string helpInfo = File.ReadAllText("../../HelpInfo.txt");
 
-            this.Renderer.WriteLine(helpInfo);
+            Renderer.WriteLine(helpInfo);
         }
 
         private CharClass GetPlayerClass()
         {
-            this.Renderer.WriteLine("Choose a class:");
-            this.Renderer.WriteLine("Mage (+50% Maximum mana, +100% Critical strike chance)");
-            this.Renderer.WriteLine("Priest (+50% Maximum mana, +50% Maximum health)");
-            this.Renderer.WriteLine("Rogue (+50% Attack rating, +100% Critical strike chance)");
-            this.Renderer.WriteLine("Warrior (+50% Defense rating, +100% Block chance)");
+            Renderer.WriteLine("Choose a class:");
+            Renderer.WriteLine("Mage (+50% Maximum mana, +100% Critical strike chance)");
+            Renderer.WriteLine("Priest (+50% Maximum mana, +50% Maximum health)");
+            Renderer.WriteLine("Rogue (+50% Attack rating, +100% Critical strike chance)");
+            Renderer.WriteLine("Warrior (+50% Defense rating, +100% Block chance)");
 
-            string choice = this.Reader.ReadLine();
-
-            string[] validChoices = { "Mage", "Priest", "Rogue", "Warrior" };
-
-            while (!validChoices.Contains(choice))
-            {
-                this.Renderer.WriteLine("Invalid choice of race, please re-enter.");
-                choice = this.Reader.ReadLine();
-            }
-
+            string choice = Reader.ReadLine();
             CharClass charClass;
-            Enum.TryParse(choice, true, out charClass);
+
+            while (!Enum.TryParse(choice, true, out charClass))
+            {
+                Renderer.WriteLine("Invalid choice of race, please re-enter.");
+                choice = Reader.ReadLine();
+            }
 
             return charClass;
         }
 
         private Race GetPlayerRace()
         {
-            this.Renderer.WriteLine("Choose a race:");
-            this.Renderer.WriteLine("Elf (+50% Attack rating)");
-            this.Renderer.WriteLine("Orc (+50% Maximum health)");
-            this.Renderer.WriteLine("Human (+100% Critical strike chance)");
-            this.Renderer.WriteLine("Undead (+50% Maximum mana)");
-            this.Renderer.WriteLine("Goblin (+50% Defense rating)");
+            Renderer.WriteLine("Choose a race:");
+            Renderer.WriteLine("Elf (+50% Attack rating)");
+            Renderer.WriteLine("Orc (+50% Maximum health)");
+            Renderer.WriteLine("Human (+100% Critical strike chance)");
+            Renderer.WriteLine("Undead (+50% Maximum mana)");
+            Renderer.WriteLine("Goblin (+50% Defense rating)");
 
-            string choice = this.Reader.ReadLine();
-
-            string[] validChoices = { "Elf", "Orc", "Human", "Undead", "Goblin" };
-
-            while (!validChoices.Contains(choice))
-            {
-                this.Renderer.WriteLine("Invalid choice of race, please re-enter.");
-                choice = this.Reader.ReadLine();
-            }
-
+            string choice = Reader.ReadLine();
             Race race;
-            Enum.TryParse(choice, true, out race);
+
+            while (!Enum.TryParse(choice, true, out race))
+            {
+                Renderer.WriteLine("Invalid choice of race, please re-enter.");
+                choice = Reader.ReadLine();
+            }
 
             return race;
         }
 
         private string GetPlayerName()
         {
-            this.Renderer.WriteLine("Please enter your name:");
+            Renderer.WriteLine("Please enter your name:");
 
-            string playerName = this.Reader.ReadLine();
+            string playerName = Reader.ReadLine();
             while (string.IsNullOrWhiteSpace(playerName))
             {
-                this.Renderer.WriteLine("Player name cannot be empty. Please re-enter.");
-                playerName = this.Reader.ReadLine();
+                Renderer.WriteLine("Player name cannot be empty. Please re-enter.");
+                playerName = Reader.ReadLine();
             }
 
             return playerName;
