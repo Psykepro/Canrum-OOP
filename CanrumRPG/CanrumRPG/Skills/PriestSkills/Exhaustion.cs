@@ -1,12 +1,12 @@
-﻿namespace CanrumRPG.Skills.RogueSkills
+﻿namespace CanrumRPG.Skills.PriestSkills
 {
     using Characters;
     using Enums;
 
-    public class Stab : ActiveSkill
+    class Exhaustion : ActiveSkill
     {
-        public Stab() 
-            : base(90, 0, 0, 40, CharClass.Rogue, 5)
+        public Exhaustion()
+            : base(140, 0, 70, 70, CharClass.Priest, 6)
         {
         }
 
@@ -14,6 +14,7 @@
         {
             caster.CurrentMana -= this.ManaModifier;
             target.CurrentHealth -= this.AttackModifier;
+            caster.CurrentHealth += this.HealthModifier;
         }
     }
 }

@@ -7,7 +7,7 @@
 
     public class BreakArms : ActiveSkill
     {
-        private const int Timeout = 6;
+        private const int Timeout = 6*1000;
 
         public BreakArms()
             : base(15, 0, 0, 20, CharClass.Priest, 10)

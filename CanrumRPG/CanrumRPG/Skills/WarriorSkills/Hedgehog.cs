@@ -1,19 +1,19 @@
-﻿namespace CanrumRPG.Skills.WarriorSkills
+﻿using System.Reflection;
+
+namespace CanrumRPG.Skills.WarriorSkills
 {
     using Characters;
     using Enums;
 
-    public class Hedgehog : ActiveSkill
+    public class Hedgehog : PassiveSkill
     {
-        public Hedgehog() 
-            : base(0, 0, 0, 30, CharClass.Warrior, 10)
+        public Hedgehog()
+            : base(10, 0, 0, 0, CharClass.Warrior)
         {
         }
 
-        protected override void DefaultSkillAction(Character caster, Character target)
+        protected override void ApplySkillStats(Character caster)
         {
-            caster.CurrentMana -= this.ManaModifier;
-            target.CurrentHealth -= (target.AttackRating * 10) / 100;
         }
     }
 }

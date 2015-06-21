@@ -1,12 +1,12 @@
-﻿namespace CanrumRPG.Skills.RogueSkills
+﻿namespace CanrumRPG.Skills.MageSkills
 {
     using Characters;
     using Enums;
 
-    public class Stab : ActiveSkill
+    class Earthquake : ActiveSkill
     {
-        public Stab() 
-            : base(90, 0, 0, 40, CharClass.Rogue, 5)
+        public Earthquake()
+            : base(250, 0, 0, 100, CharClass.Mage, 10)
         {
         }
 

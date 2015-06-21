@@ -1,12 +1,12 @@
-﻿namespace CanrumRPG.Skills.RogueSkills
+﻿namespace CanrumRPG.Skills.WarriorSkills
 {
     using Characters;
     using Enums;
 
-    public class Stab : ActiveSkill
+    class Cleavage : ActiveSkill
     {
-        public Stab() 
-            : base(90, 0, 0, 40, CharClass.Rogue, 5)
+        public Cleavage()
+            : base(230, 0, 0, 70, CharClass.Warrior, 7)
         {
         }
 
