@@ -7,7 +7,7 @@
 
     public class Armadillo : ActiveSkill
     {
-        private const int Timeout = 6;
+        private const int Timeout = 6*1000;
 
         public Armadillo()
             : base(0, 7, 90, 25, CharClass.Warrior, 8)

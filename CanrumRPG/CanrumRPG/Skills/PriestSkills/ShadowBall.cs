@@ -6,7 +6,7 @@
     public class ShadowBall : ActiveSkill
     {
         public ShadowBall()
-            : base(100, 0, 0, 60, CharClass.Priest, 10)
+            : base(120, 0, 0, 60, CharClass.Priest, 9)
         {
         }
 
