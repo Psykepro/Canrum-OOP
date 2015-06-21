@@ -4,6 +4,8 @@
 
     using Characters;
 
+    using Engine;
+
     using Enums;
 
     public abstract class ActiveSkill : Skill
@@ -23,12 +25,22 @@
         {
             if (this.isReady)
             {
+                if (caster.CurrentMana < this.ManaModifier)
+                {
+                    GameEngine.Renderer.WriteLine("Not enough mana!");
+                    return;
+                }
+
                 this.DefaultSkillAction(caster, target);
                 this.isReady = false;
                 Timer t = new Timer(this.CoolDown);
                 t.Elapsed += this.OnCooldown;
                 t.AutoReset = false;
                 t.Enabled = true;
+            }
+            else
+            {
+                GameEngine.Renderer.WriteLine("Skill not ready!");
             }
         }
 

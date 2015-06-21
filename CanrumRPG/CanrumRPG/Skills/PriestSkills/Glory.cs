@@ -1,9 +1,9 @@
-﻿using CanrumRPG.Characters;
-using CanrumRPG.Enums;
-
-namespace CanrumRPG.Skills.PriestSkills
+﻿namespace CanrumRPG.Skills.PriestSkills
 {
-    class Glory:ActiveSkill
+    using Characters;
+    using Enums;
+
+    public class Glory : ActiveSkill
     {
         public Glory() 
             : base(0, 0, 50, 20, CharClass.Priest, 8)
@@ -13,7 +13,14 @@ namespace CanrumRPG.Skills.PriestSkills
         protected override void DefaultSkillAction(Character caster, Character target)
         {
             caster.CurrentMana -= this.ManaModifier;
-            caster.CurrentHealth += this.HealthModifier;
+            if (this.HealthModifier >= caster.MaxHealth - caster.CurrentHealth)
+            {
+                caster.CurrentHealth = caster.MaxHealth;
+            }
+            else
+            {
+                caster.CurrentHealth += this.HealthModifier;
+            }
         }
     }
 }

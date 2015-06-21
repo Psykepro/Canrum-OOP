@@ -23,8 +23,8 @@
     {
         private static readonly Random Rand = new Random();
 
-        private readonly IReader reader;
-        private readonly IRenderer renderer;
+        internal static readonly IReader Reader;
+        internal static readonly IRenderer Renderer;
 
         private readonly string[] characterNames =
         {
@@ -50,8 +50,8 @@
 
         public GameEngine(IReader reader, IRenderer renderer)
         {
-            this.reader = reader;
-            this.renderer = renderer;
+            this.Reader = reader;
+            this.Renderer = renderer;
             this.characters = new List<GameObject>();
             this.items = new List<GameObject>();
         }
@@ -79,7 +79,7 @@
 
             while (this.IsRunning)
             {
-                string command = this.reader.ReadLine();
+                string command = this.Reader.ReadLine();
 
                 try
                 {
@@ -87,21 +87,21 @@
                 }
                 catch (ObjectOutOfBoundsException ex)
                 {
-                    this.renderer.WriteLine(ex.Message);
+                    this.Renderer.WriteLine(ex.Message);
                 }
                 catch (NotEnoughBeerException ex)
                 {
-                    this.renderer.WriteLine(ex.Message);
+                    this.Renderer.WriteLine(ex.Message);
                 }
                 catch (Exception ex)
                 {
-                    this.renderer.WriteLine(ex.Message);
+                    this.Renderer.WriteLine(ex.Message);
                 }
 
                 if (this.characters.Count == 0)
                 {
                     this.IsRunning = false;
-                    this.renderer.WriteLine("Valar morgulis!");
+                    this.Renderer.WriteLine("Valar morgulis!");
                 }
             }
         }
@@ -109,13 +109,13 @@
         private void SetMapSize()
         {
             int size;
-            this.renderer.WriteLine("Set map size(choose a number between 10 and 40):");
-            bool success = int.TryParse(this.reader.ReadLine(), out size);
+            this.Renderer.WriteLine("Set map size(choose a number between 10 and 40):");
+            bool success = int.TryParse(this.Reader.ReadLine(), out size);
 
             while (!success)
             {
-                this.renderer.WriteLine("Map size should be a number between 10 and 40. Please, re-enter:");
-                success = int.TryParse(this.reader.ReadLine(), out size);
+                this.Renderer.WriteLine("Map size should be a number between 10 and 40. Please, re-enter:");
+                success = int.TryParse(this.Reader.ReadLine(), out size);
             }
 
             GameEngine.MapWidth = size;
@@ -142,11 +142,11 @@
                     this.ShowStatus();
                     break;
                 case "clear":
-                    this.renderer.Clear();
+                    this.Renderer.Clear();
                     break;
                 case "exit":
                     this.IsRunning = false;
-                    this.renderer.WriteLine("Bye, noob!");
+                    this.Renderer.WriteLine("Bye, noob!");
                     break;
                 default:
                     throw new ArgumentException("Unknown command", "command");
@@ -155,9 +155,9 @@
 
         private void ShowStatus()
         {
-            this.renderer.WriteLine(this.player.ToString());
+            this.Renderer.WriteLine(this.player.ToString());
 
-            this.renderer.WriteLine(
+            this.Renderer.WriteLine(
                 "Number of enemies left: {0}", 
                 this.characters.Count);
         }
@@ -190,27 +190,27 @@
             {
                 this.player.Inventory.Add(item);
                 item.ItemState = ItemState.Collected;
-                this.renderer.WriteLine("Treasure collected!");
+                this.Renderer.WriteLine("Treasure collected!");
             }
         }
 
         private void EnterBattle(Character enemy)
         {
-            this.renderer.WriteLine(string.Format("You encounter a {0}{1}!", enemy.Race, enemy.CharClass));
-            this.renderer.WriteLine(string.Format("I'm {0}! I will crush you!", enemy.Name));
+            this.Renderer.WriteLine(string.Format("You encounter a {0}{1}!", enemy.Race, enemy.CharClass));
+            this.Renderer.WriteLine(string.Format("I'm {0}! I will crush you!", enemy.Name));
 
             int round = 1;
             while (true)
             {
-                this.renderer.WriteLine(string.Format("Round {0}", round));
-                this.renderer.WriteLine("Attack or use skill!");
-                string command = this.reader.ReadLine();
+                this.Renderer.WriteLine(string.Format("Round {0}", round));
+                this.Renderer.WriteLine("Attack or use skill!");
+                string command = this.Reader.ReadLine();
 
                 this.ExecuteBattleCommand(command, enemy);
 
                 if (enemy.CurrentHealth <= 0)
                 {
-                    this.renderer.WriteLine("Enemy killed!");
+                    this.Renderer.WriteLine("Enemy killed!");
                     this.characters.Remove(enemy);
                     break;
                 }
@@ -220,7 +220,7 @@
                 if (this.player.CurrentHealth <= 0)
                 {
                     this.IsRunning = false;
-                    this.renderer.WriteLine("You're dead!");
+                    this.Renderer.WriteLine("You're dead!");
                     break;
                 }
 
@@ -286,32 +286,32 @@
                 sb.AppendLine();
             }
 
-            this.renderer.WriteLine(sb.ToString());
+            this.Renderer.WriteLine(sb.ToString());
         }
 
         private void ExecuteHelpCommand()
         {
             string helpInfo = File.ReadAllText("../../HelpInfo.txt");
 
-            this.renderer.WriteLine(helpInfo);
+            this.Renderer.WriteLine(helpInfo);
         }
 
         private CharClass GetPlayerClass()
         {
-            this.renderer.WriteLine("Choose a class:");
-            this.renderer.WriteLine("Mage (+50% Maximum mana, +100% Critical strike chance)");
-            this.renderer.WriteLine("Priest (+50% Maximum mana, +50% Maximum health)");
-            this.renderer.WriteLine("Rogue (+50% Attack rating, +100% Critical strike chance)");
-            this.renderer.WriteLine("Warrior (+50% Defense rating, +100% Block chance)");
+            this.Renderer.WriteLine("Choose a class:");
+            this.Renderer.WriteLine("Mage (+50% Maximum mana, +100% Critical strike chance)");
+            this.Renderer.WriteLine("Priest (+50% Maximum mana, +50% Maximum health)");
+            this.Renderer.WriteLine("Rogue (+50% Attack rating, +100% Critical strike chance)");
+            this.Renderer.WriteLine("Warrior (+50% Defense rating, +100% Block chance)");
 
-            string choice = this.reader.ReadLine();
+            string choice = this.Reader.ReadLine();
 
             string[] validChoices = { "Mage", "Priest", "Rogue", "Warrior" };
 
             while (!validChoices.Contains(choice))
             {
-                this.renderer.WriteLine("Invalid choice of race, please re-enter.");
-                choice = this.reader.ReadLine();
+                this.Renderer.WriteLine("Invalid choice of race, please re-enter.");
+                choice = this.Reader.ReadLine();
             }
 
             CharClass charClass;
@@ -322,21 +322,21 @@
 
         private Race GetPlayerRace()
         {
-            this.renderer.WriteLine("Choose a race:");
-            this.renderer.WriteLine("Elf (+50% Attack rating)");
-            this.renderer.WriteLine("Orc (+50% Maximum health)");
-            this.renderer.WriteLine("Human (+100% Critical strike chance)");
-            this.renderer.WriteLine("Undead (+50% Maximum mana)");
-            this.renderer.WriteLine("Goblin (+50% Defense rating)");
+            this.Renderer.WriteLine("Choose a race:");
+            this.Renderer.WriteLine("Elf (+50% Attack rating)");
+            this.Renderer.WriteLine("Orc (+50% Maximum health)");
+            this.Renderer.WriteLine("Human (+100% Critical strike chance)");
+            this.Renderer.WriteLine("Undead (+50% Maximum mana)");
+            this.Renderer.WriteLine("Goblin (+50% Defense rating)");
 
-            string choice = this.reader.ReadLine();
+            string choice = this.Reader.ReadLine();
 
             string[] validChoices = { "Elf", "Orc", "Human", "Undead", "Goblin" };
 
             while (!validChoices.Contains(choice))
             {
-                this.renderer.WriteLine("Invalid choice of race, please re-enter.");
-                choice = this.reader.ReadLine();
+                this.Renderer.WriteLine("Invalid choice of race, please re-enter.");
+                choice = this.Reader.ReadLine();
             }
 
             Race race;
@@ -347,13 +347,13 @@
 
         private string GetPlayerName()
         {
-            this.renderer.WriteLine("Please enter your name:");
+            this.Renderer.WriteLine("Please enter your name:");
 
-            string playerName = this.reader.ReadLine();
+            string playerName = this.Reader.ReadLine();
             while (string.IsNullOrWhiteSpace(playerName))
             {
-                this.renderer.WriteLine("Player name cannot be empty. Please re-enter.");
-                playerName = this.reader.ReadLine();
+                this.Renderer.WriteLine("Player name cannot be empty. Please re-enter.");
+                playerName = this.Reader.ReadLine();
             }
 
             return playerName;

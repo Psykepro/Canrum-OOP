@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CanrumRPG.Characters;
-using CanrumRPG.Enums;
-
-namespace CanrumRPG.Skills.PriestSkills
+﻿namespace CanrumRPG.Skills.PriestSkills
 {
-    class ShadowBall:ActiveSkill
+    using Characters;
+    using Enums;
+
+    public class ShadowBall : ActiveSkill
     {
         public ShadowBall()
             : base(100, 0, 0, 60, CharClass.Priest, 10)

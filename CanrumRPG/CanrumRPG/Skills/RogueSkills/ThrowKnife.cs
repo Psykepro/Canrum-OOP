@@ -1,9 +1,9 @@
-﻿using CanrumRPG.Characters;
-using CanrumRPG.Enums;
-
-namespace CanrumRPG.Skills.RogueSkills
+﻿namespace CanrumRPG.Skills.RogueSkills
 {
-    class ThrowKnife:ActiveSkill
+    using Characters;
+    using Enums;
+
+    public class ThrowKnife : ActiveSkill
     {
         public ThrowKnife()
             : base(50, 0, 0, 20, CharClass.Rogue, 6)

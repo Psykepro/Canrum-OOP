@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CanrumRPG.Characters;
-using CanrumRPG.Enums;
-
-namespace CanrumRPG.Skills.MageSkills
+﻿namespace CanrumRPG.Skills.MageSkills
 {
-    class ManaSteal:ActiveSkill
+    using Characters;
+    using Enums;
+
+    public class ManaSteal : ActiveSkill
     {
         public ManaSteal() 
             : base(0, 0, 0, 100, CharClass.Mage, 8)
@@ -17,8 +12,8 @@ namespace CanrumRPG.Skills.MageSkills
 
         protected override void DefaultSkillAction(Character caster, Character target)
         {
-            target.CurrentMana -= this.ManaModifier;
-            caster.CurrentMana += this.ManaModifier;
+            target.CurrentMana -= this.ManaModifier > target.CurrentMana ? this.ManaModifier : target.CurrentMana;
+            caster.CurrentMana += this.ManaModifier > target.CurrentMana ? this.ManaModifier : target.CurrentMana;
         }
     }
 }

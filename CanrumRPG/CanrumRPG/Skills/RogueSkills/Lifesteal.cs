@@ -1,18 +1,18 @@
-﻿using CanrumRPG.Characters;
-using CanrumRPG.Enums;
-
-namespace CanrumRPG.Skills.RogueSkills
+﻿namespace CanrumRPG.Skills.RogueSkills
 {
-    class Lifesteal:PassiveSkill
+    using Characters;
+    using Enums;
+
+    public class Lifesteal : PassiveSkill
     {
         public Lifesteal() 
-            : base(0 , 0, 10, 0, CharClass.Rogue)
+            : base(0, 0, 10, 0, CharClass.Rogue)
         {
         }
 
         protected override void ApplySkillStats(Character caster)
         {
-            caster.CurrentHealth += (caster.AttackRating*this.HealthModifier)/100;
+            caster.CurrentHealth += (caster.AttackRating * this.HealthModifier) / 100;
         }
     }
 }

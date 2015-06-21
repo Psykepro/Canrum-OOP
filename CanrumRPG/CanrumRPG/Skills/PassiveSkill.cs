@@ -1,7 +1,7 @@
-﻿using CanrumRPG.Characters;
-
-namespace CanrumRPG.Skills
+﻿namespace CanrumRPG.Skills
 {
+    using Characters;
+
     using Enums;
 
     public abstract class PassiveSkill : Skill
@@ -10,6 +10,7 @@ namespace CanrumRPG.Skills
             : base(attackModifier, defenseModifier, healthModifier, manaModifier, Skills.Passive, charClass)
         {
         }
+
         protected abstract void ApplySkillStats(Character caster);
     }
 }

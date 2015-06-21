@@ -1,9 +1,9 @@
-﻿using CanrumRPG.Characters;
-using CanrumRPG.Enums;
-
-namespace CanrumRPG.Skills.WarriorSkills
+﻿namespace CanrumRPG.Skills.WarriorSkills
 {
-    class StrongArms:PassiveSkill
+    using Characters;
+    using Enums;
+
+    public class StrongArms : PassiveSkill
     {
         public StrongArms()
             : base(15, 0, 0, 0, CharClass.Warrior)
