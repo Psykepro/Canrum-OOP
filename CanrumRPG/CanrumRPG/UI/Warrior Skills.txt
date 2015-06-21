@@ -1,0 +1,31 @@
+Level : 1
+Name : Strong Arms
+Skill Type : Passive
+Description : Increasing hero's attack rating by 10.
+
+Level : 2
+Name : Armadillo
+Skill Type : Active
+Mana Cost : 25
+Cooldown : 8 secs
+Description : Giving for 6 seconds  -> Max Health + 90, Current Health + 45, Defense Rating + 90
+
+Level : 3
+Name : Hedgehog
+Skill Type : Passive
+Description : Returns  10% of the attack rate of the attacker as Damage.
+
+Level : 4
+Name : Overpower
+Skill Type : Active
+Mana Cost : 25
+Cooldown : 8 secs
+Description : Next attack deals triple damage.
+
+Level : 5
+Name : Cleavage
+Skill Type : Active
+Mana Cost : 70
+Cooldown : 7 secs
+Description : Almost cut into 2 pieces the target by dealing 230 damage.
+

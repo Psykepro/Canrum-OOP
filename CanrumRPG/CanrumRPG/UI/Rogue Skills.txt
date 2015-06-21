@@ -1,0 +1,30 @@
+Level : 1 
+Name : Lifesteal
+Skill Type : Passive
+Description : Healing on attack by 10 % from his attack rating.
+
+Level : 2
+Name : Throw Knife
+Skill Type : Active
+Mana Cost : 20
+Cooldown : 6
+Description : Hitting the target with knife dealing 50 damage.
+
+Level : 3
+Name : Stab
+Skill Type : Active	 
+Mana Cost : 40
+Cooldown : 5
+Description : Stabbing the target by dealing 90 damage.
+
+Level : 4
+Name : For The Crit 
+Skill Type : Passive 
+Description : Adding 25 % crit chance to crit like a motherfucker.
+
+Level : 5
+Name : Slice-Slice
+Skill Type : Active
+Mana Cost : 80
+Cooldown : 7
+Description : Slicing target by dealing 120 damage after one second dealing additional 120 damage.

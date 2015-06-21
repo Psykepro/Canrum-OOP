@@ -1,0 +1,34 @@
+Level : 1
+Name : Sharp Ice
+Skill Type : Active
+Mana Cost : 25
+Cooldown : 10 secs
+Description : Fire a sharp ice dealing 50 damage to the target.
+
+Level : 2
+Name : Torching
+Skill Type : Active
+Mana Cost : 15
+Cooldown : 3 secs
+Description : Torching target by dealing 25 damage.
+
+Level : 3 
+Name : Mana Steal
+Skill Type : Active
+Mana Cost : 0
+Cooldown : 8 secs
+Description : Stealing 100 mana from the target.
+
+Level : 4
+Name : Meteor
+Skill Type : Active
+Mana Cost : 60
+Cooldown : 6 secs
+Description : Hitting the target with meteor by dealing 120 damage.
+
+Level : 5
+Name : Earthquake
+Skill Type : Active
+Mana Cost : 100	
+Cooldown : 10
+Description : Making earthquake and dealing 250 damage.

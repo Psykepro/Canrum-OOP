@@ -101,6 +101,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="UI\HelpInfo.txt" />
+    <Content Include="UI\Mage Skills.txt" />
+    <Content Include="UI\Priest Skills.txt" />
+    <Content Include="UI\Rogue Skills.txt" />
+    <Content Include="UI\Warrior Skills.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
