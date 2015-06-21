@@ -48,6 +48,7 @@
     <Compile Include="Engine\GameEngine.cs" />
     <Compile Include="Enums\CharClass.cs" />
     <Compile Include="Enums\MapMarkers.cs" />
+    <Compile Include="Enums\MoveDirection.cs" />
     <Compile Include="Enums\Race.cs" />
     <Compile Include="Enums\Skills.cs" />
     <Compile Include="Exceptions\NotEnoughBeerException.cs" />

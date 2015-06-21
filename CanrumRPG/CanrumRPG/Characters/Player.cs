@@ -27,24 +27,22 @@
             this.SetActiveSkills();
         }
 
-        public void Move(string direction)
+        public void SetPlayerPosition(MoveDirection direction)
         {
             switch (direction)
             {
-                case "up":
+                case MoveDirection.Up:
                     this.Position = new Position(this.Position.X, this.Position.Y - 1);
                     break;
-                case "down":
+                case MoveDirection.Down:
                     this.Position = new Position(this.Position.X, this.Position.Y + 1);
                     break;
-                case "right":
+                case MoveDirection.Rigth:
                     this.Position = new Position(this.Position.X + 1, this.Position.Y);
                     break;
-                case "left":
+                case MoveDirection.Left:
                     this.Position = new Position(this.Position.X - 1, this.Position.Y);
                     break;
-                default:
-                    throw new ArgumentException("Invalid direction.", "direction");
             }
         }
 
