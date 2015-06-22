@@ -11,7 +11,7 @@
         {
         }
 
-        protected override void ApplySkillStats(Character caster)
+        public override void ApplySkillStats(Character caster)
         {
             caster.CritChance += this.AttackModifier;
         }

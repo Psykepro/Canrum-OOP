@@ -3,7 +3,7 @@
     public enum MoveDirection
     {
         Left,
-        Rigth,
+        Right,
         Up,
         Down
     }

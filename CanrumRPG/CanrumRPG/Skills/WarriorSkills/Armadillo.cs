@@ -5,9 +5,11 @@
     using Characters;
     using Enums;
 
+    using global::CanrumRPG.Engine;
+
     public class Armadillo : ActiveSkill
     {
-        private const int Timeout = 6*1000;
+        private const int Timeout = 6000;
 
         public Armadillo()
             : base(0, 7, 90, 25, CharClass.Warrior, 8)
@@ -20,6 +22,12 @@
             caster.MaxHealth += this.HealthModifier;
             caster.CurrentHealth += this.HealthModifier / 2;
             caster.DefenseRating += this.DefenseModifier;
+
+            GameEngine.Renderer.WriteLine(
+                string.Format(
+                    "{0} casts {1} raising defensive stats.",
+                    caster.Name,
+                    this.GetType().Name));
 
             Timer t = new Timer(Timeout);
             t.Elapsed += (source, e) => this.OnTimeout(source, e, caster);
@@ -43,6 +51,12 @@
             }
 
             caster.DefenseRating -= this.DefenseModifier;
+
+            GameEngine.Renderer.WriteLine(
+                string.Format(
+                    "{0}'s {1} effect wears off.",
+                    caster.Name,
+                    this.GetType().Name));
         }
     }
 }

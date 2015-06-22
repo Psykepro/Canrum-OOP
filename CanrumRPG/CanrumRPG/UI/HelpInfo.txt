@@ -1,10 +1,20 @@
-﻿Game objective: Kill everyone!!!
--help - displays basic game info and commands
+Game objective: Kill everyone!!!
+
+Global commands:
+-help - displays basic game info and commands 
+-clear - clears the screen
+-exit - run like a little girl
+
+Map commands:
+
 -map - displays the map
 -left, right, up, down - player movement
 -status - displays current player status and enemies left
--[skill name] - uses the specified active skill on the enemy/self
--attack - uses the basic character attack on the enemy
 -enemies - displays info about enemies on map
--clear - clears the screen
--exit - run like a little girl
+
+Battle commands:
+
+-attack - uses the basic character attack on the enemy 
+-use [skill name] - uses the specified active skill on the enemy/self
+-enemy - displays information about the current enemy
+-status - displays info about the player's current battle status

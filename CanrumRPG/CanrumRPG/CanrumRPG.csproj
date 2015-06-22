@@ -46,6 +46,7 @@
     <Compile Include="Characters\NPC.cs" />
     <Compile Include="Characters\Player.cs" />
     <Compile Include="Engine\GameEngine.cs" />
+    <Compile Include="Engine\Resources.cs" />
     <Compile Include="Enums\CharClass.cs" />
     <Compile Include="Enums\MapMarkers.cs" />
     <Compile Include="Enums\MoveDirection.cs" />

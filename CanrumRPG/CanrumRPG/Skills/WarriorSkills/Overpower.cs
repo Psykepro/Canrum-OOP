@@ -1,6 +1,9 @@
 ﻿namespace CanrumRPG.Skills.WarriorSkills
 {
     using Characters;
+
+    using Engine;
+
     using Enums;
 
     public class Overpower : ActiveSkill
@@ -13,6 +16,13 @@
         {
             caster.CurrentMana -= this.ManaModifier;
             target.CurrentHealth -= caster.AttackRating * this.AttackModifier;
+            GameEngine.Renderer.WriteLine(
+                string.Format(
+                    "{0} {1}s {2} for {3} damage.",
+                    caster.Name,
+                    this.GetType().Name,
+                    target.Name,
+                    this.AttackModifier * caster.AttackRating));
         }
     }
 }

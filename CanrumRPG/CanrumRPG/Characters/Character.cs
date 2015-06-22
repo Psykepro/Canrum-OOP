@@ -1,17 +1,19 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Character.cs" company="">
-//   
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-namespace CanrumRPG.Characters
+﻿namespace CanrumRPG.Characters
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
-    using global::CanrumRPG.Engine;
-    using global::CanrumRPG.Enums;
-    using global::CanrumRPG.Interfaces;
-    using global::CanrumRPG.Items;
+    using Engine;
+
+    using Enums;
+
+    using Interfaces;
+
+    using Items;
+
+    using Skills;
+    using Skills.WarriorSkills;
 
     public abstract class Character : GameObject, ICharacter
     {
@@ -36,6 +38,7 @@ namespace CanrumRPG.Characters
             this.Race = race;
             this.CharClass = charClass;
             this.SetInitialStats(this.Race, this.CharClass, this.isPlayer);
+            this.PassiveSkills = new List<PassiveSkill>();
             this.Inventory = new List<Item>();
         }
 
@@ -57,9 +60,11 @@ namespace CanrumRPG.Characters
 
         public List<Item> Inventory { get; set; }
 
-        public CharClass CharClass { get; set; }
+        public CharClass CharClass { get; private set; }
 
-        public Race Race { get; set; }
+        public Race Race { get; private set; }
+
+        public List<PassiveSkill> PassiveSkills { get; private set; }
 
         public void Attack(Character target, Random rnd)
         {
@@ -70,12 +75,75 @@ namespace CanrumRPG.Characters
             {
                 int dmg = this.AttackRating - target.DefenseRating;
 
-                dmg *= crit <= this.CritChance ? 2 : 1;
+                if (crit <= this.CritChance)
+                {
+                    dmg *= 2;
+                    GameEngine.Renderer.WriteLine(
+                        string.Format("{0} lands a critical strike on {1} for {2} damage!", this.Name, target.Name, dmg));
+                }
+                else
+                {
+                    GameEngine.Renderer.WriteLine(
+                        string.Format("{0} hits {1} for {2} damage!", this.Name, target.Name, dmg));
+                }
 
                 target.CurrentHealth -= dmg;
+
+                foreach (var s in target.PassiveSkills)
+                {
+                    int returnDmg;
+                    switch (s.GetType().Name)
+                    {
+                        case "Hedgehog":
+                            returnDmg = dmg * s.AttackModifier / 100;
+                            this.CurrentHealth -= returnDmg;
+                            GameEngine.Renderer.WriteLine(
+                            string.Format("{0} damage bounces back at {1} beacuse of {2}'s {3}!", returnDmg, this.Name, target.Name, s.GetType().Name));
+                            break;
+                        case "Lifesteal":
+                            returnDmg = (target.AttackRating * s.HealthModifier) / 100;
+                            target.CurrentHealth += returnDmg;
+                            GameEngine.Renderer.WriteLine(
+                            string.Format("{0} steals {1} life from {2}!", target.Name, returnDmg, this.Name));
+                            break;
+                    }
+                }
+
+                foreach (var s in this.PassiveSkills)
+                {
+                    switch (s.GetType().Name)
+                    {
+                        case "Lifesteal":
+                            int returnDmg = (this.AttackRating * s.HealthModifier) / 100;
+                            this.CurrentHealth += returnDmg;
+                            GameEngine.Renderer.WriteLine(
+                            string.Format("{0} steals {1} life from {2}!", this.Name, returnDmg, target.Name));
+                            break;
+                    }
+                }
+
+            }
+            else
+            {
+                GameEngine.Renderer.WriteLine(string.Format("{0} blocks {1}'s attack!", target.Name, this.Name));
             }
         }
-        
+
+        public override string ToString()
+        {
+            return string.Format(
+                "{0}: {1} {2}\nAttack: {3}, Defense: {4}\nHealth: {5}/{6}\nMana: {7}/{8}",
+                this.Name,
+                this.Race,
+                this.CharClass,
+                this.AttackRating,
+                this.DefenseRating,
+                this.CurrentHealth,
+                this.MaxHealth,
+                this.CurrentMana,
+                this.MaxMana);
+        }
+
         private void SetInitialStats(Race race, CharClass charClass, bool player)
         {
             if (player)
@@ -89,12 +157,12 @@ namespace CanrumRPG.Characters
             }
             else
             {
-                this.AttackRating = Ar / 2;
-                this.DefenseRating = Dr / 2;
-                this.CritChance = Cc / 2;
-                this.BlockChance = Bc / 2;
-                this.MaxHealth = Mh / 2;
-                this.MaxMana = Mm / 2;
+                this.AttackRating -= Ar / 8;
+                this.DefenseRating -= Dr / 8;
+                this.CritChance -= Cc / 8;
+                this.BlockChance -= Bc / 8;
+                this.MaxHealth -= Mh / 8;
+                this.MaxMana -= Mm / 8;
             }
 
             switch (race)

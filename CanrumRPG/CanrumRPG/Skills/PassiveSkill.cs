@@ -11,6 +11,6 @@
         {
         }
 
-        protected abstract void ApplySkillStats(Character caster);
+        public abstract void ApplySkillStats(Character caster);
     }
 }

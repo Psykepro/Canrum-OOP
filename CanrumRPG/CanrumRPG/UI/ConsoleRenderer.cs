@@ -1,7 +1,7 @@
 ﻿namespace CanrumRPG.UI
 {
     using System;
-
+    
     using Interfaces;
 
     public class ConsoleRenderer : IRenderer

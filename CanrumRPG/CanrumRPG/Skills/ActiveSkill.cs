@@ -27,7 +27,7 @@
             {
                 if (caster.CurrentMana < this.ManaModifier)
                 {
-                    GameEngine.Renderer.WriteLine("Not enough mana!");
+                    GameEngine.Renderer.WriteLine(string.Format("Not enough mana to cast {0}!", this.GetType().Name));
                     return;
                 }
 
@@ -40,7 +40,7 @@
             }
             else
             {
-                GameEngine.Renderer.WriteLine("Skill not ready!");
+                GameEngine.Renderer.WriteLine("{0} is not ready to use yet!", this.GetType().Name);
             }
         }
 

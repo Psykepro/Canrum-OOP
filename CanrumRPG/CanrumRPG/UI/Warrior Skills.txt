@@ -1,5 +1,5 @@
 Level : 1
-Name : Strong Arms
+Name : StrongArms
 Skill Type : Passive
 Description : Increasing hero's attack rating by 10.
 

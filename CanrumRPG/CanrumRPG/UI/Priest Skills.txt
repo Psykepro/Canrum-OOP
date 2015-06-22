@@ -6,21 +6,21 @@ Cooldown : 9
 Description : Healing himself by 50 health.
 
 Level : 2 
-Name : Shadow Steal
+Name : ShadowSteal
 Skill Type : Active
 Mana Cost : 20
 Cooldown : 6
 Description : Dealing 30 damage to the target and healing himself by 20 health.
 
 Level : 3
-Name : Break Arms
+Name : BreakArms
 Skill Type : Active
 Mana Cost : 20
 Cooldown : 10
 Description : Reduce target's attack rating by 15 % for 6 seconds.
 
 Level : 4
-Name : Shadow Ball
+Name : ShadowBall
 Skill Type : Active
 Mana Cost : 60
 Cooldown : 9

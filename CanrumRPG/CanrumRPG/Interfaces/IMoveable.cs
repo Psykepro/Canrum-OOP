@@ -1,7 +1,9 @@
 ﻿namespace CanrumRPG.Interfaces
 {
+    using global::CanrumRPG.Enums;
+
     public interface IMoveable
     {
-        void Move(string direction);
+        void SetPlayerPosition(MoveDirection direction);
     }
 }

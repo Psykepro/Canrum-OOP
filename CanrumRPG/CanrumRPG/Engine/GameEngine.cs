@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Reflection;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     using Attributes;
 
@@ -23,25 +24,8 @@
     {
         private static readonly Random Rand = new Random();
 
-        internal static IReader Reader;
-        internal static IRenderer Renderer;
-
-        private readonly string[] characterNames =
-        {
-            "Alinar",
-            "Zandro",
-            "Llombaerth",
-            "Inchel",
-            "Aymer",
-            "Folre",
-            "Nyvorlas",
-            "Khuumal",
-            "Intevar",
-            "Nopos"
-        };
-
-        private readonly IList<GameObject> characters;
-        private readonly IList<GameObject> items;
+        private readonly IList<Npc> creepsList;
+        private readonly IList<Item> items;
 
         private int initialNumberOfEnemies;
         private int initialNumberOfTreasures;
@@ -52,27 +36,27 @@
         {
             Reader = reader;
             Renderer = renderer;
-            this.characters = new List<GameObject>();
-            this.items = new List<GameObject>();
+            this.creepsList = new List<Npc>();
+            this.items = new List<Item>();
         }
 
         public static int MapWidth { get; set; }
 
         public static int MapHeight { get; set; }
 
-        public bool IsRunning { get; private set; }
+        public static IRenderer Renderer { get; set; }
+
+        public static IReader Reader { get; set; }
+
+        private bool IsRunning { get; set; }
 
         public void Run()
         {
             this.IsRunning = true;
 
             this.SetMapSize();
-
-            var playerName = this.GetPlayerName();
-            Race race = this.GetPlayerRace();
-            CharClass charClass = this.GetPlayerClass();
-
-            this.player = new Player(playerName, race, charClass);
+            
+            this.player = new Player(this.GetPlayerName(), this.GetPlayerRace(), this.GetPlayerClass());
 
             this.PopulateEnemies();
             this.PopulateItems();
@@ -98,7 +82,7 @@
                     Renderer.WriteLine(ex.Message);
                 }
 
-                if (this.characters.Count == 0)
+                if (this.creepsList.Count == 0)
                 {
                     this.IsRunning = false;
                     Renderer.WriteLine("Valar morgulis!");
@@ -150,23 +134,13 @@
                     throw new ArgumentException("Unknown command", "command");
             }
         }
-
-        private void ShowStatus()
-        {
-            Renderer.WriteLine(this.player.ToString());
-
-            Renderer.WriteLine(
-                "Number of enemies left: {0}", 
-                this.characters.Count);
-        }
-
+        
         private void MovePlayer(MoveDirection direction)
         {
-
             this.player.SetPlayerPosition(direction);
 
-            Character enemy =
-                this.characters.Cast<Character>()
+            Npc enemy =
+                this.creepsList
                 .FirstOrDefault(
                     e => e.Position.X == this.player.Position.X 
                         && e.Position.Y == this.player.Position.Y 
@@ -179,7 +153,7 @@
             }
 
             Item item =
-                this.items.Cast<Item>()
+                this.items
                 .FirstOrDefault(
                     e => e.Position.X == this.player.Position.X 
                         && e.Position.Y == this.player.Position.Y 
@@ -193,7 +167,7 @@
             }
         }
 
-        private void EnterBattle(Character enemy)
+        private void EnterBattle(Npc enemy)
         {
             Renderer.WriteLine(string.Format("You encounter a {0}{1}!", enemy.Race, enemy.CharClass));
             Renderer.WriteLine(string.Format("I'm {0}! I will crush you!", enemy.Name));
@@ -203,14 +177,15 @@
             {
                 Renderer.WriteLine(string.Format("Round {0}", round));
                 Renderer.WriteLine("Attack or use skill!");
-                string command = Reader.ReadLine();
+                string[] command = Regex.Split(Reader.ReadLine(), @"\s+");
 
                 this.ExecuteBattleCommand(command, enemy);
 
                 if (enemy.CurrentHealth <= 0)
                 {
                     Renderer.WriteLine("Enemy killed!");
-                    this.characters.Remove(enemy);
+                    this.player.GetPlayerExperience(enemy.MaxHealth);
+                    this.creepsList.Remove(enemy);
                     break;
                 }
 
@@ -225,28 +200,81 @@
 
                 round++;
             }
-            
         }
-
-        private void ExecuteBattleCommand(string command, Character enemy)
+        
+        private void ExecuteBattleCommand(string[] command, Character enemy)
         {
-            switch (command)
+            string[] internalCommand = command;
+            switch (internalCommand[0])
             {
                 case "attack":
                     this.player.Attack(enemy, Rand);
+                    break;
+                case "use":
+                    this.UsePlayerSkill(internalCommand[1].ToLower(), enemy);
+                    break;
+                case "help":
+                    this.ExecuteHelpCommand();
+                    internalCommand = Regex.Split(Reader.ReadLine(), @"\s+");
+                    this.ExecuteBattleCommand(internalCommand, enemy);
+                    break;
+                case "enemy":
+                    this.ShowEnemyStatus(enemy);
+                    internalCommand = Regex.Split(Reader.ReadLine(), @"\s+");
+                    this.ExecuteBattleCommand(internalCommand, enemy);
+                    break;
+                case "status":
+                    this.ShowStatus();
+                    internalCommand = Regex.Split(Reader.ReadLine(), @"\s+");
+                    this.ExecuteBattleCommand(internalCommand, enemy);
+                    break;
+                case "clear":
+                    Renderer.Clear();
+                    break;
+                case "exit":
+                    this.IsRunning = false;
+                    Renderer.WriteLine("Bye, noob!");
                     break;
                 default:
                     throw new ArgumentException("Unknown command", "command");
             }
         }
 
+        private void ShowStatus()
+        {
+            Renderer.WriteLine(this.player.ToString());
+
+            Renderer.WriteLine(
+                "Number of enemies left: {0}",
+                this.creepsList.Count);
+        }
+
+        private void ShowEnemyStatus(Character enemy)
+        {
+            Renderer.WriteLine(enemy.ToString());
+        }
+
+        private void UsePlayerSkill(string skill, Character enemy)
+        {
+            foreach (var s in this.player.ActiveSkills)
+            {
+                if (s.GetType().Name.ToLower() == skill)
+                {
+                    s.Use(this.player, enemy);
+                    return;
+                }
+            }
+
+            Renderer.WriteLine("No such skill available.");
+        }
+
         private void PrintMap()
         {
             StringBuilder sb = new StringBuilder();
 
-            for (int row = 0; row < GameEngine.MapHeight; row++)
+            for (int row = 0; row < MapHeight; row++)
             {
-                for (int col = 0; col < GameEngine.MapWidth; col++)
+                for (int col = 0; col < MapWidth; col++)
                 {
                     if (this.player.Position.X == col && this.player.Position.Y == row)
                     {
@@ -255,7 +283,7 @@
                     }
 
                     var character =
-                         this.characters
+                         this.creepsList
                          .Cast<Character>()
                          .FirstOrDefault(c => c.Position.X == col 
                              && c.Position.Y == row 
@@ -290,7 +318,7 @@
 
         private void ExecuteHelpCommand()
         {
-            string helpInfo = File.ReadAllText("../../HelpInfo.txt");
+            string helpInfo = File.ReadAllText("../../UI/HelpInfo.txt");
 
             Renderer.WriteLine(helpInfo);
         }
@@ -352,7 +380,7 @@
 
         private void PopulateItems()
         {
-            this.initialNumberOfTreasures = GameEngine.MapWidth * GameEngine.MapHeight * 15 / 100;
+            this.initialNumberOfTreasures = MapWidth * MapHeight * 15 / 100;
             for (int i = 0; i < this.initialNumberOfTreasures; i++)
             {
                 Item item = this.CreateItem();
@@ -362,10 +390,10 @@
 
         private Item CreateItem()
         {
-            int currentX = Rand.Next(1, GameEngine.MapWidth);
-            int currentY = Rand.Next(1, GameEngine.MapHeight);
+            int currentX = Rand.Next(1, MapWidth);
+            int currentY = Rand.Next(1, MapHeight);
 
-            bool containsEnemy = this.characters
+            bool containsEnemy = this.creepsList
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);
 
             bool containsItem = this.items
@@ -373,10 +401,10 @@
 
             while (containsEnemy || containsItem)
             {
-                currentX = Rand.Next(1, GameEngine.MapWidth);
-                currentY = Rand.Next(1, GameEngine.MapHeight);
+                currentX = Rand.Next(1, MapWidth);
+                currentY = Rand.Next(1, MapHeight);
 
-                containsEnemy = this.characters
+                containsEnemy = this.creepsList
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);
 
                 containsItem = this.items
@@ -388,46 +416,37 @@
 
         private void PopulateEnemies()
         {
-            this.initialNumberOfEnemies = GameEngine.MapHeight * GameEngine.MapWidth * 15 / 100;
+            this.initialNumberOfEnemies = MapHeight * MapWidth * 15 / 100;
             for (int i = 0; i < this.initialNumberOfEnemies; i++)
             {
-                GameObject enemy = this.CreateEnemy();
-                this.characters.Add(enemy);
+                Npc enemy = this.CreateEnemy();
+                this.creepsList.Add(enemy);
             }
         }
 
-        private GameObject CreateEnemy()
+        private Npc CreateEnemy()
         {
-            int currentX = Rand.Next(1, GameEngine.MapWidth);
-            int currentY = Rand.Next(1, GameEngine.MapHeight);
+            int currentX = Rand.Next(1, MapWidth);
+            int currentY = Rand.Next(1, MapHeight);
 
-            bool containsEnemy = this.characters
+            bool containsEnemy = this.creepsList
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);
 
             while (containsEnemy)
             {
-                currentX = Rand.Next(1, GameEngine.MapWidth);
-                currentY = Rand.Next(1, GameEngine.MapHeight);
+                currentX = Rand.Next(1, MapWidth);
+                currentY = Rand.Next(1, MapHeight);
 
-                containsEnemy = this.characters
+                containsEnemy = this.creepsList
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);
             }
 
-            int nameIndex = Rand.Next(0, this.characterNames.Length);
-            string name = this.characterNames[nameIndex];
+            int nameIndex = Rand.Next(0, Resources.CharacterNames.Length);
+            string name = Resources.CharacterNames[nameIndex];
 
-            var enemyTypes = Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(t => t.CustomAttributes
-                    .Any(a => a.AttributeType == typeof(EnemyAttribute)))
-                    .ToArray();
+            Npc creep = new Npc(new Position(currentX, currentY), name, (Race)Rand.Next(5), (CharClass)Rand.Next(4));
 
-            var type = enemyTypes[Rand.Next(0, enemyTypes.Length)];
-
-            GameObject character = Activator
-                .CreateInstance(type, new Position(currentX, currentY), name) as GameObject;
-
-            return character;
+            return creep;
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿namespace CanrumRPG.Skills.RogueSkills
 {
     using Characters;
+
+    using Engine;
+
     using Enums;
 
     public class Stab : ActiveSkill
@@ -14,6 +17,13 @@
         {
             caster.CurrentMana -= this.ManaModifier;
             target.CurrentHealth -= this.AttackModifier;
+
+            GameEngine.Renderer.WriteLine(
+                string.Format(
+                    "{0} stabs {1} for {2} damage.",
+                    caster.Name,
+                    target.Name,
+                    this.AttackModifier));
         }
     }
 }

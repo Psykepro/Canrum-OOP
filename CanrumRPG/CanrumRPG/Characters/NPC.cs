@@ -1,34 +1,29 @@
 ﻿namespace CanrumRPG.Characters
 {
-    using System;
-    using System.Collections.Generic;
+    using Attributes;
 
     using Engine;
-    using Enums;
 
-    using Attributes;
+    using Enums;
 
     [Enemy]
     public class Npc : Character
     {
-        private readonly List<Skills> passiveSkills;
-
         public Npc(Position position, string name, Race race, CharClass charClass)
             : base(position, MapMarkers.E, name, race, charClass, false)
         {
-            this.passiveSkills = new List<Skills>();
             this.FillInventory();
             this.SetPassiveSkills();
         }
 
         private void FillInventory()
         {
-            throw new NotImplementedException();
+            // TODO;
         }
 
         private void SetPassiveSkills()
         {
-            throw new NotImplementedException();
+            // TODO;
         }
     }
 }

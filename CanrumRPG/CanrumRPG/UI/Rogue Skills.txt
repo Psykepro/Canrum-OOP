@@ -4,7 +4,7 @@ Skill Type : Passive
 Description : Healing on attack by 10 % from his attack rating.
 
 Level : 2
-Name : Throw Knife
+Name : ThrowKnife
 Skill Type : Active
 Mana Cost : 20
 Cooldown : 6
@@ -18,12 +18,12 @@ Cooldown : 5
 Description : Stabbing the target by dealing 90 damage.
 
 Level : 4
-Name : For The Crit 
+Name : ForTheCrit 
 Skill Type : Passive 
 Description : Adding 25 % crit chance to crit like a motherfucker.
 
 Level : 5
-Name : Slice-Slice
+Name : SliceSlice
 Skill Type : Active
 Mana Cost : 80
 Cooldown : 7

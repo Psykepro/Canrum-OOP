@@ -1,5 +1,5 @@
 Level : 1
-Name : Sharp Ice
+Name : SharpIce
 Skill Type : Active
 Mana Cost : 25
 Cooldown : 10 secs
@@ -13,7 +13,7 @@ Cooldown : 3 secs
 Description : Torching target by dealing 25 damage.
 
 Level : 3 
-Name : Mana Steal
+Name : ManaSteal
 Skill Type : Active
 Mana Cost : 0
 Cooldown : 8 secs

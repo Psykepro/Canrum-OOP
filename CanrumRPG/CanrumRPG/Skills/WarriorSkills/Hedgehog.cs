@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace CanrumRPG.Skills.WarriorSkills
+﻿namespace CanrumRPG.Skills.WarriorSkills
 {
     using Characters;
     using Enums;
@@ -12,7 +10,7 @@ namespace CanrumRPG.Skills.WarriorSkills
         {
         }
 
-        protected override void ApplySkillStats(Character caster)
+        public override void ApplySkillStats(Character caster)
         {
         }
     }

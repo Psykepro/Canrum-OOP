@@ -2,9 +2,9 @@
 {
     public enum CharClass
     {
-        Warrior,
-        Mage,
-        Priest,
-        Rogue
+        Warrior = 0,
+        Mage = 1,
+        Priest = 2,
+        Rogue = 3
     }
 }
