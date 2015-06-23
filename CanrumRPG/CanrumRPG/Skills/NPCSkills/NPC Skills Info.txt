@@ -1,0 +1,5 @@
+1.Claw : Increasing npc's attack damage with 15.
+2.Heal Spirit : Healing npc with 10 health every 5 seconds.
+3.Stone Skin : Increasing npc's armor with 15.
+4.Boc Boc : Increasing npc's crit chance with 10.
+5.Tough Guy : Increasing npc's health with 150.
