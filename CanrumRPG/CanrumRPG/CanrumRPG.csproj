@@ -95,6 +95,11 @@
     <Compile Include="Skills\MageSkills\Meteor.cs" />
     <Compile Include="Skills\MageSkills\SharpIce.cs" />
     <Compile Include="Skills\MageSkills\Torching.cs" />
+    <Compile Include="Skills\NPCSkills\BocBoc.cs" />
+    <Compile Include="Skills\NPCSkills\Claw.cs" />
+    <Compile Include="Skills\NPCSkills\HealSpirit.cs" />
+    <Compile Include="Skills\NPCSkills\StoneSkin.cs" />
+    <Compile Include="Skills\NPCSkills\ToughGuy.cs" />
     <Compile Include="Skills\PassiveSkill.cs" />
     <Compile Include="Skills\PriestSkills\BreakArms.cs" />
     <Compile Include="Skills\PriestSkills\Exhaustion.cs" />
@@ -120,6 +125,7 @@
     <None Include="CanrumRPG.cd" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Skills\NPCSkills\NPC Skills Info.txt" />
     <Content Include="UI\HelpInfo.txt" />
     <Content Include="UI\Mage Skills.txt" />
     <Content Include="UI\Priest Skills.txt" />
