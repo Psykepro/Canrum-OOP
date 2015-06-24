@@ -34,7 +34,7 @@
                                                                               { 2, new ThrowKnife() },
                                                                               { 3, new Stab() },
                                                                               { 4, new ForTheCrit() },
-                                                                              { 5, new SliceSlice() }
+                                                                              { 5, new SliceSliceSlice() }
                                                                           };
 
         public static readonly Dictionary<int, Skill> WarriorSkills = new Dictionary<int, Skill>()
@@ -42,7 +42,7 @@
                                                                               { 1, new StrongArms() },
                                                                               { 2, new Armadillo() },
                                                                               { 3, new Hedgehog() },
-                                                                              { 4, new Overpower() },
+                                                                              { 4, new UnstopableArmor() },
                                                                               { 5, new Cleavage() }
                                                                           };
 
