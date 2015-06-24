@@ -20,11 +20,11 @@
 
             Timer t = new Timer(Interval);
             t.Elapsed += (source, e) => this.OnTick(source, e, caster);
-            t.AutoReset = false;
+            t.AutoReset = true;
             t.Enabled = true;
         }
 
-        private void OnTick(object source, System.Timers.ElapsedEventArgs e, Character caster)
+        private void OnTick(object source, ElapsedEventArgs e, Character caster)
         {
             if (caster.CurrentHealth > caster.MaxHealth)
             {

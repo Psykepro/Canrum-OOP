@@ -1,8 +1,8 @@
 ﻿namespace CanrumRPG.Characters
 {
     using System;
+
     using System.Collections.Generic;
-    using System.Linq;
 
     using Engine;
 
@@ -13,7 +13,7 @@
     using Items;
 
     using Skills;
-    using Skills.WarriorSkills;
+
 
     public abstract class Character : GameObject, ICharacter
     {
