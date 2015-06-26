@@ -161,7 +161,7 @@
 
             if (item != null)
             {
-                this.player.Inventory.Add(item);
+                EquipCommand.Equip(item, this.player);
                 item.ItemState = ItemState.Collected;
                 Renderer.WriteLine("Treasure collected!");
             }

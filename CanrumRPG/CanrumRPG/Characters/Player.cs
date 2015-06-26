@@ -127,7 +127,7 @@
 
         private void FillInventory()
         {
-            // TODO;
+            //this is useless if we use equip command
         }
     }
 }

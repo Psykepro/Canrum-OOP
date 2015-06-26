@@ -27,5 +27,13 @@
         public Skills Type { get; set; }
 
         public CharClass CharClass { get; set; }
+
+        public override string ToString()
+        {
+            return this.GetType().Name;
+        }
+
     }
+
+    
 }

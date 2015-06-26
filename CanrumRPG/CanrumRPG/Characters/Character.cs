@@ -1,4 +1,6 @@
-﻿namespace CanrumRPG.Characters
+﻿using CanrumRPG.Checkers;
+
+namespace CanrumRPG.Characters
 {
     using System;
 
@@ -89,38 +91,8 @@
 
                 target.CurrentHealth -= dmg;
 
-                foreach (var s in target.PassiveSkills)
-                {
-                    int returnDmg;
-                    switch (s.GetType().Name)
-                    {
-                        case "Hedgehog":
-                            returnDmg = dmg * s.AttackModifier / 100;
-                            this.CurrentHealth -= returnDmg;
-                            GameEngine.Renderer.WriteLine(
-                            string.Format("{0} damage bounces back at {1} beacuse of {2}'s {3}!", returnDmg, this.Name, target.Name, s.GetType().Name));
-                            break;
-                        case "Lifesteal":
-                            returnDmg = (target.AttackRating * s.HealthModifier) / 100;
-                            target.CurrentHealth += returnDmg;
-                            GameEngine.Renderer.WriteLine(
-                            string.Format("{0} steals {1} life from {2}!", target.Name, returnDmg, this.Name));
-                            break;
-                    }
-                }
-
-                foreach (var s in this.PassiveSkills)
-                {
-                    switch (s.GetType().Name)
-                    {
-                        case "Lifesteal":
-                            int returnDmg = (this.AttackRating * s.HealthModifier) / 100;
-                            this.CurrentHealth += returnDmg;
-                            GameEngine.Renderer.WriteLine(
-                            string.Format("{0} steals {1} life from {2}!", this.Name, returnDmg, target.Name));
-                            break;
-                    }
-                }
+                TargetPassiveSkillsCheck.Check(this,target,dmg);
+                AttackerPassiveSkillsCheck.Check(this,target);
 
             }
             else

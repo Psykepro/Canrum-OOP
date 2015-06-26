@@ -45,6 +45,9 @@
     <Compile Include="Characters\Character.cs" />
     <Compile Include="Characters\NPC.cs" />
     <Compile Include="Characters\Player.cs" />
+    <Compile Include="Checkers\AttackerPassiveSkillsCheck.cs" />
+    <Compile Include="Checkers\TargetPassiveSkillsCheck.cs" />
+    <Compile Include="Engine\EquipCommand.cs" />
     <Compile Include="Engine\GameEngine.cs" />
     <Compile Include="Engine\Resources.cs" />
     <Compile Include="Enums\CharClass.cs" />
