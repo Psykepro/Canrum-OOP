@@ -1,15 +1,12 @@
 ﻿namespace CanrumRPG.Skills.WarriorSkills
 {
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
 
     public class Cleavage : ActiveSkill
     {
         public Cleavage()
-            : base(230, 0, 0, 70, CharClass.Warrior, 7)
+            : base(230, 0, 0, 70, 7)
         {
         }
 
@@ -20,9 +17,9 @@
 
             GameEngine.Renderer.WriteLine(
                 string.Format(
-                    "{0} cleaves {1} for {2} damage.",
-                    caster.Name,
-                    target.Name,
+                    "{0} cleaves {1} for {2} damage.", 
+                    caster.Name, 
+                    target.Name, 
                     this.AttackModifier));
         }
     }

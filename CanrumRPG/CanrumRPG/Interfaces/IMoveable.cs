@@ -1,6 +1,6 @@
 ﻿namespace CanrumRPG.Interfaces
 {
-    using global::CanrumRPG.Enums;
+    using CanrumRPG.Enums;
 
     public interface IMoveable
     {

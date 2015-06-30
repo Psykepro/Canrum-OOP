@@ -1,15 +1,12 @@
 ﻿namespace CanrumRPG.Skills.MageSkills
 {
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
 
     public class ManaSteal : ActiveSkill
     {
         public ManaSteal() 
-            : base(0, 0, 0, 100, CharClass.Mage, 8)
+            : base(0, 0, 0, 100, 8)
         {
         }
 

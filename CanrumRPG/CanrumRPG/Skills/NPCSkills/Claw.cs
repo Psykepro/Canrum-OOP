@@ -1,12 +1,10 @@
 ﻿namespace CanrumRPG.Skills.NPCSkills
 {
-    using Characters;
-
-    using Enums;
+    using CanrumRPG.Characters;
 
     public class Claw : PassiveSkill
     {
-        public Claw(CharClass charClass) : base(15, 0, 0, 0, charClass)
+        public Claw() : base(15, 0, 0, 0)
         {
         }
 

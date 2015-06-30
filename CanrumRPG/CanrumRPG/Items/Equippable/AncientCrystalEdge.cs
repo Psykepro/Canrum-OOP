@@ -1,8 +1,8 @@
-﻿
-namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Items.Equippable
 {
-    using Engine;
-    public class AncientCrystalEdge : Equipable
+    using CanrumRPG.Engine;
+
+    public class AncientCrystalEdge : Equippable
     {
         public AncientCrystalEdge(Position position)
             : base(position, "AncientCrystalEdge", 26, 0, 0, 0)

@@ -1,19 +1,20 @@
 ﻿namespace CanrumRPG.Characters
 {
-    using Attributes;
+    using System;
 
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Attributes;
+    using CanrumRPG.Engine;
+    using CanrumRPG.Enums;
+    using CanrumRPG.Skills;
 
     [Enemy]
     public class Npc : Character
     {
-        public Npc(Position position, string name, Race race, CharClass charClass)
+        public Npc(Position position, string name, Race race, CharClass charClass, Random rand)
             : base(position, MapMarkers.E, name, race, charClass, false)
         {
             this.FillInventory();
-            this.SetPassiveSkills();
+            this.SetPassiveSkills(rand);
         }
 
         private void FillInventory()
@@ -21,9 +22,22 @@
             // TODO;
         }
 
-        private void SetPassiveSkills()
+        private void SetPassiveSkills(Random rand)
         {
-            // TODO;
+            while (this.PassiveSkills.Count < 2)
+            {
+                var skill = (PassiveSkill)Resources.NpcSkills[rand.Next(Resources.NpcSkills.Count)];
+
+                if (!this.PassiveSkills.Contains(skill))
+                {
+                    this.PassiveSkills.Add(skill);
+                }
+            }
+
+            foreach (var skill in this.PassiveSkills)
+            {
+                skill.ApplySkillStats(this);
+            }
         }
     }
 }

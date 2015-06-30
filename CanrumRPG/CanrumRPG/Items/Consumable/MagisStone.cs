@@ -1,10 +1,11 @@
-﻿using System.Diagnostics;
-using CanrumRPG.Characters;
-using CanrumRPG.Engine;
-
-namespace CanrumRPG.Items
+﻿
+namespace CanrumRPG.Items.Consumable
 {
     using System.Timers;
+
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
+
     public class MagisStone : Consumable
     {
         private const int Timeout = 5*1000;
@@ -34,7 +35,7 @@ namespace CanrumRPG.Items
             t.Enabled = true;
             t.Elapsed+=(source, e)=>this.OnTimeout(source, e, caster);
             GameEngine.Renderer.WriteLine("{0} used {1} regenerated {2} health, {3} mana and increased Defense Rating with {4} for 5 seconds."
-                ,caster.Name,this.GetType().Name,this.HealthModifier,this.ManaModifier,this.DefenseModifier);
+                , caster.Name, this.GetType().Name, this.HealthModifier, this.ManaModifier, this.DefenseModifier);
         }
 
         private void OnTimeout(object source, object o, Character caster)

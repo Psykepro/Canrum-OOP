@@ -1,18 +1,15 @@
 ﻿namespace CanrumRPG.Skills.RogueSkills
 {
     using System;
-    using System.Timers;
 
-    using Characters;
-
-    using Enums;
+    using CanrumRPG.Characters;
 
     public class SliceSliceSlice : ActiveSkill
     {
         private const int Timeout = 1000;
 
         public SliceSliceSlice()
-            : base(0, 0, 0, 80, CharClass.Rogue, 7)
+            : base(0, 0, 0, 80, 7)
         {
         }
 

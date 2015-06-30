@@ -1,15 +1,12 @@
 ﻿namespace CanrumRPG.Skills.PriestSkills
 {
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
 
     public class ShadowBall : ActiveSkill
     {
         public ShadowBall()
-            : base(120, 0, 0, 60, CharClass.Priest, 9)
+            : base(120, 0, 0, 60, 9)
         {
         }
 
@@ -20,10 +17,10 @@
 
             GameEngine.Renderer.WriteLine(
                 string.Format(
-                    "{0} hurls a {1} on {2} causing {3} damage.",
-                    caster.Name,
-                    this.GetType().Name,
-                    target.Name,
+                    "{0} hurls a {1} on {2} causing {3} damage.", 
+                    caster.Name, 
+                    this.GetType().Name, 
+                    target.Name, 
                     this.AttackModifier));
         }
     }

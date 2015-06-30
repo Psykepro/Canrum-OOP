@@ -1,26 +1,20 @@
 ﻿namespace CanrumRPG.Skills.NPCSkills
 {
-    using Characters;
-
-    using Enums;
-
-    using System.Timers;
-
-
+    using CanrumRPG.Characters;
 
     public class LastChance : PassiveSkill
     {
-        public LastChance(CharClass charClass) : base(0, 15, 0, 0, charClass)
+        public LastChance() : base(0, 15, 0, 0)
         {
         }
 
         public override void ApplySkillStats(Character caster)
         {
-            int under30 = (caster.CurrentHealth*30)/100;
-            if (caster.CurrentHealth<under30)
+            int under30 = (caster.CurrentHealth * 30) / 100;
+            if (caster.CurrentHealth < under30)
             {
                 caster.BlockChance += this.DefenseModifier;
-                caster.DefenseRating += this.DefenseModifier/2;
+                caster.DefenseRating += this.DefenseModifier / 2;
             }
         }
 

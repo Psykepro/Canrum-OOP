@@ -1,8 +1,9 @@
-﻿using CanrumRPG.Characters;
-using CanrumRPG.Engine;
-
-namespace CanrumRPG.Items
+﻿
+namespace CanrumRPG.Items.Consumable
 {
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
+
     public class HealingSalve : Consumable
     {
         public HealingSalve(Position position)
@@ -19,7 +20,7 @@ namespace CanrumRPG.Items
                 caster.CurrentHealth = caster.MaxHealth;
             }
 
-            GameEngine.Renderer.WriteLine("{0} used {1} regenerated {2} health.", caster.Name, this.GetType().Name,
+            GameEngine.Renderer.WriteLine("{0} used {1} regenerated {2} health.", caster.Name, this.GetType().Name, 
                 this.HealthModifier);
         }
     }

@@ -1,15 +1,12 @@
 ﻿namespace CanrumRPG.Skills.MageSkills
 {
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
 
     public class Meteor : ActiveSkill
     {
         public Meteor() 
-            : base(120, 0, 0, 60, CharClass.Mage, 6)
+            : base(120, 0, 0, 60, 6)
         {
         }
 

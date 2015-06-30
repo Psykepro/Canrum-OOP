@@ -1,8 +1,8 @@
 ﻿namespace CanrumRPG.Items
 {
-    using Engine;
-    using Enums;
-    using Interfaces;
+    using CanrumRPG.Engine;
+    using CanrumRPG.Enums;
+    using CanrumRPG.Interfaces;
 
     public class Item : GameObject, ISkillModifiers
     {

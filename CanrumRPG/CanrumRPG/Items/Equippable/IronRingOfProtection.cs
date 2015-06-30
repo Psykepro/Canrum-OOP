@@ -1,7 +1,9 @@
-﻿namespace CanrumRPG.Items
+﻿
+namespace CanrumRPG.Items.Equippable
 {
-    using Engine;
-    public class IronRingOfProtection : Equipable
+    using CanrumRPG.Engine;
+
+    public class IronRingOfProtection : Equippable
     {
         public IronRingOfProtection(Position position)
             : base(position, "Iron Ring Of Protection", 0, 10, 0, 0)

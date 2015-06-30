@@ -1,12 +1,10 @@
 ﻿namespace CanrumRPG.Skills.NPCSkills
 {
-    using Characters;
+    using CanrumRPG.Characters;
 
-    using Enums;
-
-    public class ToughGuy:PassiveSkill
+    public class ToughGuy : PassiveSkill
     {
-        public ToughGuy(CharClass charClass) : base(0, 0, 150, 0, charClass)
+        public ToughGuy() : base(0, 0, 150, 0)
         {
         }
 

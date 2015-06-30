@@ -2,11 +2,9 @@
 {
     using System;
 
-    using Engine;
-
-    using Enums;
-
-    using Exceptions;
+    using CanrumRPG.Engine;
+    using CanrumRPG.Enums;
+    using CanrumRPG.Exceptions;
 
     public abstract class GameObject
     {

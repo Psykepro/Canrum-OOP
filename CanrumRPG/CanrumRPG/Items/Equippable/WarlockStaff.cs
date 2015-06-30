@@ -1,8 +1,8 @@
-﻿
-namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Items.Equippable
 {
-    using Engine;
-    public class WarlockStaff : Equipable
+    using CanrumRPG.Engine;
+
+    public class WarlockStaff : Equippable
     {
         public WarlockStaff(Position position)
                     : base(position, "WarlockStaff", 19, 0, 0, 0)

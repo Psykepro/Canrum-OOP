@@ -1,9 +1,8 @@
-﻿using CanrumRPG.Engine;
-
-namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Items.Equippable
 {
-    using Engine;
-    public class AbbysalBlade : Equipable
+    using CanrumRPG.Engine;
+
+    public class AbbysalBlade : Equippable
     {
         public AbbysalBlade(Position position)
             : base(position, "Abbysal Blade", 23, 0, 0, 0)

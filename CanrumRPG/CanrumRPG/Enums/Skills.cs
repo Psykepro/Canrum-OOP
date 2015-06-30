@@ -2,7 +2,7 @@
 {
     public enum Skills
     {
-        Active,
+        Active, 
         Passive
     }
 }

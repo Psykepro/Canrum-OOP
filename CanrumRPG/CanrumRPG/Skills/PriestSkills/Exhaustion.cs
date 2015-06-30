@@ -1,15 +1,12 @@
 ﻿namespace CanrumRPG.Skills.PriestSkills
 {
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
 
     public class Exhaustion : ActiveSkill
     {
         public Exhaustion()
-            : base(140, 0, 70, 70, CharClass.Priest, 6)
+            : base(140, 0, 70, 70, 6)
         {
         }
 
@@ -30,11 +27,11 @@
 
             GameEngine.Renderer.WriteLine(
                 string.Format(
-                    "{0} uses {1} on {2} causing {3} damage and heals self in the meantime for {4} health.",
-                    caster.Name,
-                    this.GetType().Name,
-                    target.Name,
-                    this.AttackModifier,
+                    "{0} uses {1} on {2} causing {3} damage and heals self in the meantime for {4} health.", 
+                    caster.Name, 
+                    this.GetType().Name, 
+                    target.Name, 
+                    this.AttackModifier, 
                     healed));
         }
     }

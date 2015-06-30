@@ -1,16 +1,11 @@
-﻿
-
-
-namespace CanrumRPG.Skills.WarriorSkills
+﻿namespace CanrumRPG.Skills.WarriorSkills
 {
-    using Characters;
+    using CanrumRPG.Characters;
 
-    using Enums;
-
-    class UnstopableArmor : PassiveSkill
+    public class UnstopableArmor : PassiveSkill
     {        
         public UnstopableArmor()
-            : base(0, 30, 0, 0, CharClass.Warrior)
+            : base(0, 30, 0, 0)
         {
         }
 

@@ -1,15 +1,12 @@
 ﻿namespace CanrumRPG.Skills.MageSkills
 {
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
 
     public class SharpIce : ActiveSkill
     {
         public SharpIce() 
-            : base(50, 0, 0, 25, CharClass.Mage, 10)
+            : base(50, 0, 0, 25, 10)
         {
         }
 

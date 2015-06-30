@@ -1,15 +1,12 @@
 ﻿namespace CanrumRPG.Skills.PriestSkills
 {
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
 
     public class ShadowSteal : ActiveSkill
     {
         public ShadowSteal() 
-            : base(30, 0, 20, 20, CharClass.Priest, 6)
+            : base(30, 0, 20, 20, 6)
         {
         }
 
@@ -30,11 +27,11 @@
 
             GameEngine.Renderer.WriteLine(
                 string.Format(
-                    "{0} uses {1} on {2} causing {3} damage and healing self for {4} hit points.",
-                    caster.Name,
-                    this.GetType().Name,
-                    target.Name,
-                    this.AttackModifier,
+                    "{0} uses {1} on {2} causing {3} damage and healing self for {4} hit points.", 
+                    caster.Name, 
+                    this.GetType().Name, 
+                    target.Name, 
+                    this.AttackModifier, 
                     healed));
         }
     }

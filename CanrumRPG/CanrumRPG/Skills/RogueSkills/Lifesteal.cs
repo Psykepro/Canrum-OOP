@@ -1,12 +1,11 @@
 ﻿namespace CanrumRPG.Skills.RogueSkills
 {
-    using Characters;
-    using Enums;
+    using CanrumRPG.Characters;
 
     public class Lifesteal : PassiveSkill
     {
         public Lifesteal() 
-            : base(0, 0, 5, 0, CharClass.Rogue)
+            : base(0, 0, 5, 0)
         {
         }
 

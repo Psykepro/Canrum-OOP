@@ -2,7 +2,7 @@
 {
     using System;
 
-    using Interfaces;
+    using CanrumRPG.Interfaces;
 
     public class ConsoleInputReader : IReader
     {

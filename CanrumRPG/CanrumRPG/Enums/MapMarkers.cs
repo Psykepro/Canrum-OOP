@@ -2,8 +2,8 @@
 {
     public enum MapMarkers
     {
-        P,
-        E,
+        P, 
+        E, 
         T
     }
 }

@@ -1,8 +1,8 @@
-﻿namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Items.Equippable
 {
-    using Engine;
+    using CanrumRPG.Engine;
 
-    public class WizardRelic : Equipable
+    public class WizardRelic : Equippable
     {
         public WizardRelic(Position position)
                     : base(position, "WizardRelic", 30, 0, 0, 0)

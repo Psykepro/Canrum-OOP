@@ -4,21 +4,14 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using System.Text;
     using System.Text.RegularExpressions;
 
-    using Attributes;
-
-    using Characters;
-
-    using Enums;
-
-    using Exceptions;
-
-    using Interfaces;
-
-    using Items;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Enums;
+    using CanrumRPG.Exceptions;
+    using CanrumRPG.Interfaces;
+    using CanrumRPG.Items;
 
     public class GameEngine
     {
@@ -40,13 +33,13 @@
             this.items = new List<Item>();
         }
 
-        public static int MapWidth { get; set; }
+        public static int MapWidth { get; private set; }
 
-        public static int MapHeight { get; set; }
+        public static int MapHeight { get; private set; }
 
-        public static IRenderer Renderer { get; set; }
+        public static IRenderer Renderer { get; private set; }
 
-        public static IReader Reader { get; set; }
+        private static IReader Reader { get; set; }
 
         private bool IsRunning { get; set; }
 
@@ -54,9 +47,9 @@
         {
             this.IsRunning = true;
 
-            this.SetMapSize();
+            SetMapSize();
             
-            this.player = new Player(this.GetPlayerName(), this.GetPlayerRace(), this.GetPlayerClass());
+            this.player = new Player(GetPlayerName(), GetPlayerRace(), GetPlayerClass());
 
             this.PopulateEnemies();
             this.PopulateItems();
@@ -90,18 +83,77 @@
             }
         }
 
-        private void SetMapSize()
+        private static void SetMapSize()
         {
             int size;
             Renderer.WriteLine("Set map size(choose a number between 10 and 40):");
 
-            while (!int.TryParse(Reader.ReadLine(), out size))
+            while (!int.TryParse(Reader.ReadLine(), out size) || size < 10 || size > 40)
             {
                 Renderer.WriteLine("Map size should be a number between 10 and 40. Please, re-enter:");
             }
 
             MapWidth = size;
             MapHeight = size;
+        }
+
+        private static CharClass GetPlayerClass()
+        {
+            Renderer.WriteLine("Choose a class:");
+            DirectoryInfo classInfo = new DirectoryInfo(@"..\..\UI\ClassInfo");
+            DirectoryInfo skillInfo = new DirectoryInfo(@"..\..\UI\SkillsInfo");
+
+            foreach (var cl in classInfo.GetFiles())
+            {
+                Renderer.WriteLine(cl.OpenText().ReadToEnd());
+            }
+
+            string choice = Reader.ReadLine();
+            CharClass charClass;
+
+            while (!Enum.TryParse(choice, true, out charClass))
+            {
+                Renderer.WriteLine("Invalid choice of race, please re-enter.");
+                choice = Reader.ReadLine();
+            }
+
+            return charClass;
+        }
+
+        private static Race GetPlayerRace()
+        {
+            Renderer.WriteLine("Choose a race:");
+            DirectoryInfo raceInfo = new DirectoryInfo(@"..\..\UI\RaceInfo");
+
+            foreach (var ra in raceInfo.GetFiles())
+            {
+                Renderer.WriteLine(ra.OpenText().ReadToEnd());
+            }
+
+            string choice = Reader.ReadLine();
+            Race race;
+
+            while (!Enum.TryParse(choice, true, out race))
+            {
+                Renderer.WriteLine("Invalid choice of race, please re-enter.");
+                choice = Reader.ReadLine();
+            }
+
+            return race;
+        }
+
+        private static string GetPlayerName()
+        {
+            Renderer.WriteLine("Please enter your name:");
+
+            string playerName = Reader.ReadLine();
+            while (string.IsNullOrWhiteSpace(playerName))
+            {
+                Renderer.WriteLine("Player name cannot be empty. Please re-enter.");
+                playerName = Reader.ReadLine();
+            }
+
+            return playerName;
         }
 
         private void ExecuteCommand(string command)
@@ -245,7 +297,7 @@
             Renderer.WriteLine(this.player.ToString());
 
             Renderer.WriteLine(
-                "Number of enemies left: {0}",
+                "Number of enemies left: {0}", 
                 this.creepsList.Count);
         }
 
@@ -323,61 +375,6 @@
             Renderer.WriteLine(helpInfo);
         }
 
-        private CharClass GetPlayerClass()
-        {
-            Renderer.WriteLine("Choose a class:");
-            Renderer.WriteLine("Mage (+50% Maximum mana, +100% Critical strike chance)");
-            Renderer.WriteLine("Priest (+50% Maximum mana, +50% Maximum health)");
-            Renderer.WriteLine("Rogue (+50% Attack rating, +100% Critical strike chance)");
-            Renderer.WriteLine("Warrior (+50% Defense rating, +100% Block chance)");
-
-            string choice = Reader.ReadLine();
-            CharClass charClass;
-
-            while (!Enum.TryParse(choice, true, out charClass))
-            {
-                Renderer.WriteLine("Invalid choice of race, please re-enter.");
-                choice = Reader.ReadLine();
-            }
-
-            return charClass;
-        }
-
-        private Race GetPlayerRace()
-        {
-            Renderer.WriteLine("Choose a race:");
-            Renderer.WriteLine("Elf (+50% Attack rating)");
-            Renderer.WriteLine("Orc (+50% Maximum health)");
-            Renderer.WriteLine("Human (+100% Critical strike chance)");
-            Renderer.WriteLine("Undead (+50% Maximum mana)");
-            Renderer.WriteLine("Goblin (+50% Defense rating)");
-
-            string choice = Reader.ReadLine();
-            Race race;
-
-            while (!Enum.TryParse(choice, true, out race))
-            {
-                Renderer.WriteLine("Invalid choice of race, please re-enter.");
-                choice = Reader.ReadLine();
-            }
-
-            return race;
-        }
-
-        private string GetPlayerName()
-        {
-            Renderer.WriteLine("Please enter your name:");
-
-            string playerName = Reader.ReadLine();
-            while (string.IsNullOrWhiteSpace(playerName))
-            {
-                Renderer.WriteLine("Player name cannot be empty. Please re-enter.");
-                playerName = Reader.ReadLine();
-            }
-
-            return playerName;
-        }
-
         private void PopulateItems()
         {
             this.initialNumberOfTreasures = MapWidth * MapHeight * 15 / 100;
@@ -444,7 +441,7 @@
             int nameIndex = Rand.Next(0, Resources.CharacterNames.Length);
             string name = Resources.CharacterNames[nameIndex];
 
-            Npc creep = new Npc(new Position(currentX, currentY), name, (Race)Rand.Next(5), (CharClass)Rand.Next(4));
+            Npc creep = new Npc(new Position(currentX, currentY), name, (Race)Rand.Next(5), (CharClass)Rand.Next(4), Rand);
 
             return creep;
         }

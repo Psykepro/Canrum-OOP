@@ -1,21 +1,14 @@
-﻿using CanrumRPG.Checkers;
-
-namespace CanrumRPG.Characters
+﻿namespace CanrumRPG.Characters
 {
     using System;
-
     using System.Collections.Generic;
 
-    using Engine;
-
-    using Enums;
-
-    using Interfaces;
-
-    using Items;
-
-    using Skills;
-
+    using CanrumRPG.Checkers;
+    using CanrumRPG.Engine;
+    using CanrumRPG.Enums;
+    using CanrumRPG.Interfaces;
+    using CanrumRPG.Items;
+    using CanrumRPG.Skills;
 
     public abstract class Character : GameObject, ICharacter
     {
@@ -91,8 +84,8 @@ namespace CanrumRPG.Characters
 
                 target.CurrentHealth -= dmg;
 
-                TargetPassiveSkillsCheck.Check(this,target,dmg);
-                AttackerPassiveSkillsCheck.Check(this,target);
+                TargetPassiveSkillsCheck.Check(this, target, dmg);
+                AttackerPassiveSkillsCheck.Check(this, target);
 
             }
             else
@@ -104,15 +97,15 @@ namespace CanrumRPG.Characters
         public override string ToString()
         {
             return string.Format(
-                "{0}: {1} {2}\nAttack: {3}, Defense: {4}\nHealth: {5}/{6}\nMana: {7}/{8}",
-                this.Name,
-                this.Race,
-                this.CharClass,
-                this.AttackRating,
-                this.DefenseRating,
-                this.CurrentHealth,
-                this.MaxHealth,
-                this.CurrentMana,
+                "{0}: {1} {2}\nAttack: {3}, Defense: {4}\nHealth: {5}/{6}\nMana: {7}/{8}", 
+                this.Name, 
+                this.Race, 
+                this.CharClass, 
+                this.AttackRating, 
+                this.DefenseRating, 
+                this.CurrentHealth, 
+                this.MaxHealth, 
+                this.CurrentMana, 
                 this.MaxMana);
         }
 

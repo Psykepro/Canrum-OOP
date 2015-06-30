@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using Items;
+    using CanrumRPG.Items;
 
     public interface IInventory
     {

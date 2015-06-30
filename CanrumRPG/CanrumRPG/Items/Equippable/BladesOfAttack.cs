@@ -1,8 +1,8 @@
-﻿
-namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Items.Equippable
 {
-    using Engine;
-    public class BladesOfAttack : Equipable
+    using CanrumRPG.Engine;
+
+    public class BladesOfAttack : Equippable
     {
         public BladesOfAttack(Position position)
             : base(position, "Blades Of Attack", 15, 0, 0, 0)

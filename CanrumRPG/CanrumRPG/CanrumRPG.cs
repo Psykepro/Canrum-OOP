@@ -1,10 +1,10 @@
 ﻿namespace CanrumRPG
 {
-    using global::CanrumRPG.Engine;
-    using global::CanrumRPG.Interfaces;
-    using global::CanrumRPG.UI;
+    using CanrumRPG.Engine;
+    using CanrumRPG.Interfaces;
+    using CanrumRPG.UI;
 
-    public static class CanrumRPG
+    public static class CanrumRpg
     {
         public static void Main()
         {

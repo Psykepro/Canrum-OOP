@@ -1,8 +1,8 @@
-﻿using CanrumRPG.Characters;
-using CanrumRPG.Engine;
-
-namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Items.Consumable
 {
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
+
     public class ManaStone : Consumable
     {
         public ManaStone(Position position)
@@ -19,7 +19,10 @@ namespace CanrumRPG.Items
                 caster.CurrentMana = caster.MaxMana;
             }
 
-            GameEngine.Renderer.WriteLine("{0} used {1} regenerated {2} mana.", caster.Name, this.GetType().Name,
+            GameEngine.Renderer.WriteLine(
+                "{0} used {1} regenerated {2} mana.",
+                caster.Name,
+                this.GetType().Name,
                 this.ManaModifier);
         }
     }

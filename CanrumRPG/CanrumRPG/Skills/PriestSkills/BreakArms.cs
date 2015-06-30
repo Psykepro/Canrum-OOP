@@ -2,18 +2,15 @@
 {
     using System.Timers;
 
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
 
     public class BreakArms : ActiveSkill
     {
         private const int Timeout = 6000;
 
         public BreakArms()
-            : base(15, 0, 0, 20, CharClass.Priest, 10)
+            : base(15, 0, 0, 20, 10)
         {
         }
 
@@ -26,11 +23,11 @@
 
             GameEngine.Renderer.WriteLine(
                 string.Format(
-                    "{0} curses {1} with {2} causing {1}'s {3} to drop by {4}.",
-                    caster.Name,
-                    target.Name,
-                    this.GetType().Name,
-                    target.AttackRating,
+                    "{0} curses {1} with {2} causing {1}'s {3} to drop by {4}.", 
+                    caster.Name, 
+                    target.Name, 
+                    this.GetType().Name, 
+                    target.AttackRating, 
                     modifier));
 
             Timer t = new Timer(Timeout);

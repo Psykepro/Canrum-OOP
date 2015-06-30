@@ -1,12 +1,11 @@
 ﻿namespace CanrumRPG.Skills.WarriorSkills
 {
-    using Characters;
-    using Enums;
+    using CanrumRPG.Characters;
 
     public class Hedgehog : PassiveSkill
     {
         public Hedgehog()
-            : base(10, 0, 0, 0, CharClass.Warrior)
+            : base(10, 0, 0, 0)
         {
         }
 

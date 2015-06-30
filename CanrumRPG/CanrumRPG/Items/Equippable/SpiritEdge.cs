@@ -1,10 +1,8 @@
-﻿
-using CanrumRPG.Engine;
-
-namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Items.Equippable
 {
-    using Engine;
-    class SpiritEdge : Equipable
+    using CanrumRPG.Engine;
+
+    public class SpiritEdge : Equippable
     {
         public SpiritEdge(Position position) 
                     : base(position, "Spirit Edge", 28, 0, 0, 0)

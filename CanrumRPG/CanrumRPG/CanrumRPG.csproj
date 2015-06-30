@@ -74,19 +74,19 @@
     <Compile Include="Items\Consumable\HealingSalve.cs" />
     <Compile Include="Items\Consumable\MagisStone.cs" />
     <Compile Include="Items\Consumable\ManaStone.cs" />
-    <Compile Include="Items\Equipable.cs" />
-    <Compile Include="Items\Equipable\AbbysalBlade.cs" />
-    <Compile Include="Items\Equipable\AncientCrystalEdge.cs" />
-    <Compile Include="Items\Equipable\BladesOfAttack.cs" />
-    <Compile Include="Items\Equipable\HelmOfProtection.cs" />
-    <Compile Include="Items\Equipable\IronMail.cs" />
-    <Compile Include="Items\Equipable\EtheralBladeOfPain.cs" />
-    <Compile Include="Items\Equipable\IronRingOfProtection.cs" />
-    <Compile Include="Items\Equipable\Maelstorm.cs" />
-    <Compile Include="Items\Equipable\ShieldOfProtection.cs" />
-    <Compile Include="Items\Equipable\SpiritEdge.cs" />
-    <Compile Include="Items\Equipable\WarlockStaff.cs" />
-    <Compile Include="Items\Equipable\WizardRelic.cs" />
+    <Compile Include="Items\Equippable.cs" />
+    <Compile Include="Items\Equippable\AbbysalBlade.cs" />
+    <Compile Include="Items\Equippable\AncientCrystalEdge.cs" />
+    <Compile Include="Items\Equippable\BladesOfAttack.cs" />
+    <Compile Include="Items\Equippable\HelmOfProtection.cs" />
+    <Compile Include="Items\Equippable\IronMail.cs" />
+    <Compile Include="Items\Equippable\EtheralBladeOfPain.cs" />
+    <Compile Include="Items\Equippable\IronRingOfProtection.cs" />
+    <Compile Include="Items\Equippable\Maelstorm.cs" />
+    <Compile Include="Items\Equippable\ShieldOfProtection.cs" />
+    <Compile Include="Items\Equippable\SpiritEdge.cs" />
+    <Compile Include="Items\Equippable\WarlockStaff.cs" />
+    <Compile Include="Items\Equippable\WizardRelic.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Enums\ItemState.cs" />
     <Compile Include="Engine\Position.cs" />
@@ -120,7 +120,9 @@
     <Compile Include="Skills\WarriorSkills\Hedgehog.cs" />
     <Compile Include="Skills\WarriorSkills\StrongArms.cs" />
     <Compile Include="Skills\WarriorSkills\UnstopableArmor.cs" />
-    <Compile Include="UI\ConsoleInputReader.cs" />
+    <Compile Include="UI\ConsoleInputReader.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="UI\ConsoleRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -128,12 +130,21 @@
     <None Include="CanrumRPG.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Skills\NPCSkills\NPC Skills Info.txt" />
+    <Content Include="UI\ClassInfo\Mage.txt" />
+    <Content Include="UI\ClassInfo\Priest.txt" />
+    <Content Include="UI\ClassInfo\Rogue.txt" />
+    <Content Include="UI\ClassInfo\Warrior.txt" />
+    <Content Include="UI\RaceInfo\Elf.txt" />
+    <Content Include="UI\RaceInfo\Goblin.txt" />
+    <Content Include="UI\RaceInfo\Human.txt" />
+    <Content Include="UI\RaceInfo\Orc.txt" />
+    <Content Include="UI\RaceInfo\Undead.txt" />
+    <Content Include="UI\SkillsInfo\NPC.txt" />
     <Content Include="UI\HelpInfo.txt" />
-    <Content Include="UI\Mage Skills.txt" />
-    <Content Include="UI\Priest Skills.txt" />
-    <Content Include="UI\Rogue Skills.txt" />
-    <Content Include="UI\Warrior Skills.txt" />
+    <Content Include="UI\SkillsInfo\Mage.txt" />
+    <Content Include="UI\SkillsInfo\Priest.txt" />
+    <Content Include="UI\SkillsInfo\Rogue.txt" />
+    <Content Include="UI\SkillsInfo\Warrior.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

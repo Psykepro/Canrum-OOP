@@ -1,15 +1,12 @@
 ﻿namespace CanrumRPG.Skills.MageSkills
 {
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
 
     public class Earthquake : ActiveSkill
     {
         public Earthquake()
-            : base(250, 0, 0, 100, CharClass.Mage, 10)
+            : base(250, 0, 0, 100, 10)
         {
         }
 

@@ -1,13 +1,14 @@
-﻿using System;
-using CanrumRPG.Enums;
-
-namespace CanrumRPG.Engine
+﻿namespace CanrumRPG.Engine
 {
-    using Items;
-    using Characters;
+    using System;
+
+    using CanrumRPG.Characters;
+    using CanrumRPG.Enums;
+    using CanrumRPG.Items;
+
     public class EquipCommand
     {
-        public static void Equip(Item item,Character hero)
+        public static void Equip(Item item, Character hero)
         {
             if (item.ItemState == ItemState.Available)
             {

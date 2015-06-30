@@ -3,17 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Engine;
-
-    using Enums;
-
-    using Interfaces;
-
-    using Items;
-
-    using Skills;
-
-
+    using CanrumRPG.Engine;
+    using CanrumRPG.Enums;
+    using CanrumRPG.Interfaces;
+    using CanrumRPG.Skills;
 
     public class Player : Character, IMoveable
     {
@@ -62,16 +55,16 @@
         public override string ToString()
         {
             return string.Format(
-                "{0}: {1} {2} {9}\nAttack: {3}, Defense: {4}\nHealth: {5}/{6}\nMana: {7}/{8}",
-                this.Name,
-                this.Race,
-                this.CharClass,
-                this.AttackRating,
-                this.DefenseRating,
-                this.CurrentHealth,
-                this.MaxHealth,
-                this.CurrentMana,
-                this.MaxMana,
+                "{0}: {1} {2} {9}\nAttack: {3}, Defense: {4}\nHealth: {5}/{6}\nMana: {7}/{8}", 
+                this.Name, 
+                this.Race, 
+                this.CharClass, 
+                this.AttackRating, 
+                this.DefenseRating, 
+                this.CurrentHealth, 
+                this.MaxHealth, 
+                this.CurrentMana, 
+                this.MaxMana, 
                 this.Level);
         }
         
@@ -127,7 +120,7 @@
 
         private void FillInventory()
         {
-            //this is useless if we use equip command
+            // this is useless if we use equip command
         }
     }
 }

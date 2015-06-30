@@ -1,6 +1,6 @@
 ﻿namespace CanrumRPG.Interfaces
 {
-    using Enums;
+    using CanrumRPG.Enums;
 
     public interface ISkillModifiers
     {

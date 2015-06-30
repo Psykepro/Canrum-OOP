@@ -2,18 +2,16 @@
 {
     using System.Timers;
 
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
+    using CanrumRPG.Enums;
 
     public abstract class ActiveSkill : Skill
     {
         private bool isReady;
 
-        protected ActiveSkill(int attackModifier, int defenseModifier, int healthModifier, int manaModifier, CharClass charClass, int coolDown)
-            : base(attackModifier, defenseModifier, healthModifier, manaModifier, Skills.Active, charClass)
+        protected ActiveSkill(int attackModifier, int defenseModifier, int healthModifier, int manaModifier, int coolDown)
+            : base(attackModifier, defenseModifier, healthModifier, manaModifier, Skills.Active)
         {
             this.isReady = true;
             this.CoolDown = coolDown * 1000;

@@ -1,8 +1,8 @@
-﻿using CanrumRPG.Characters;
-using CanrumRPG.Engine;
-
-namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Items.Consumable
 {
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
+
     public class DevineWater : Consumable
     {
         public DevineWater(Position position)
@@ -25,7 +25,7 @@ namespace CanrumRPG.Items
                 caster.CurrentHealth = caster.MaxHealth;
             }
 
-            GameEngine.Renderer.WriteLine("{0} used {1} regenerated {2} mana and {3} health.", caster.Name,
+            GameEngine.Renderer.WriteLine("{0} used {1} regenerated {2} mana and {3} health.", caster.Name, 
                 this.GetType().Name, this.ManaModifier, this.HealthModifier);
         }
     }

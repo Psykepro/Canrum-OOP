@@ -1,8 +1,8 @@
-﻿
-namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Items.Equippable
 {
-    using Engine;
-    class Maelstorm : Equipable
+    using CanrumRPG.Engine;
+
+    public class Maelstorm : Equippable
     {
         public Maelstorm(Position position)
             : base(position, "Maelstorm", 19, 0, 0, 0)

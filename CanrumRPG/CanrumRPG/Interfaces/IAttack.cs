@@ -2,7 +2,7 @@
 {
     using System;
 
-    using Characters;
+    using CanrumRPG.Characters;
 
     public interface IAttack
     {

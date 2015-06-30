@@ -1,7 +1,8 @@
-﻿namespace CanrumRPG.Items
+﻿namespace CanrumRPG.Items.Equippable
 {
-    using Engine;
-    public class ShieldOfProtection : Equipable
+    using CanrumRPG.Engine;
+
+    public class ShieldOfProtection : Equippable
     {
         public ShieldOfProtection(Position position)
             : base(position, "Shield Of Protection", 0, 12, 0, 0)

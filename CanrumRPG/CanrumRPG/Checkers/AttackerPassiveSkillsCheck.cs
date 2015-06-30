@@ -1,11 +1,11 @@
-﻿using CanrumRPG.Engine;
-
-namespace CanrumRPG.Checkers
+﻿namespace CanrumRPG.Checkers
 {
-    using Characters;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
+
     public class AttackerPassiveSkillsCheck
     {
-        public static void Check(Character attackingHero,Character target)
+        public static void Check(Character attackingHero, Character target)
         {
             foreach (var s in attackingHero.PassiveSkills)
             {

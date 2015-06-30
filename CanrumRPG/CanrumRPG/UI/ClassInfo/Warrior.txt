@@ -1,0 +1,1 @@
+Warrior +50% Defense rating, +100% Block chance

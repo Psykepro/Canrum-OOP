@@ -1,15 +1,12 @@
 ﻿namespace CanrumRPG.Skills.MageSkills
 {
-    using Characters;
-
-    using Engine;
-
-    using Enums;
+    using CanrumRPG.Characters;
+    using CanrumRPG.Engine;
 
     public class Torching : ActiveSkill
     {
         public Torching()
-            : base(25, 0, 0, 15, CharClass.Mage, 3)
+            : base(25, 0, 0, 15, 3)
         {
         }
 
