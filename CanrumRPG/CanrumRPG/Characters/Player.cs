@@ -39,16 +39,32 @@
             switch (direction)
             {
                 case MapCommands.Up:
-                    this.Position = new Position(this.Position.X, this.Position.Y - 1);
+                    if (this.Position.Y - 1 >= 0)
+                    {
+                        this.Position = new Position(this.Position.X, this.Position.Y - 1);
+                    }
+
                     break;
                 case MapCommands.Down:
-                    this.Position = new Position(this.Position.X, this.Position.Y + 1);
+                    if (this.Position.Y + 1 <= GameEngine.MapHeight)
+                    {
+                        this.Position = new Position(this.Position.X, this.Position.Y + 1);
+                    }
+
                     break;
                 case MapCommands.Right:
-                    this.Position = new Position(this.Position.X + 1, this.Position.Y);
+                    if (this.Position.X + 1 <= GameEngine.MapWidth)
+                    {
+                        this.Position = new Position(this.Position.X + 1, this.Position.Y);
+                    }
+
                     break;
                 case MapCommands.Left:
-                    this.Position = new Position(this.Position.X - 1, this.Position.Y);
+                    if (this.Position.X - 1 >= 0)
+                    {
+                        this.Position = new Position(this.Position.X - 1, this.Position.Y);
+                    }
+
                     break;
             }
         }
