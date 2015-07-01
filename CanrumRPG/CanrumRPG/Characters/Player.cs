@@ -36,35 +36,24 @@
         
         public void SetPlayerPosition(MapCommands direction)
         {
+            int position;
             switch (direction)
             {
                 case MapCommands.Up:
-                    if (this.Position.Y - 1 >= 0)
-                    {
-                        this.Position = new Position(this.Position.X, this.Position.Y - 1);
-                    }
-
+                    position = this.Position.Y == 0 ? GameEngine.MapHeight - 1 : -1;
+                    this.Position = new Position(this.Position.X, this.Position.Y + position);
                     break;
                 case MapCommands.Down:
-                    if (this.Position.Y + 1 <= GameEngine.MapHeight)
-                    {
-                        this.Position = new Position(this.Position.X, this.Position.Y + 1);
-                    }
-
+                    position = this.Position.Y == GameEngine.MapHeight - 1 ? 1 - GameEngine.MapHeight : 1;
+                    this.Position = new Position(this.Position.X, this.Position.Y + position);
                     break;
                 case MapCommands.Right:
-                    if (this.Position.X + 1 <= GameEngine.MapWidth)
-                    {
-                        this.Position = new Position(this.Position.X + 1, this.Position.Y);
-                    }
-
+                    position = this.Position.X == GameEngine.MapWidth ? 1 - GameEngine.MapWidth : 1;
+                    this.Position = new Position(this.Position.X + position, this.Position.Y);
                     break;
                 case MapCommands.Left:
-                    if (this.Position.X - 1 >= 0)
-                    {
-                        this.Position = new Position(this.Position.X - 1, this.Position.Y);
-                    }
-
+                    position = this.Position.X == 0 ? GameEngine.MapWidth - 1 : -1;
+                    this.Position = new Position(this.Position.X + position, this.Position.Y);
                     break;
             }
         }

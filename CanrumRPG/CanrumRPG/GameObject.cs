@@ -39,26 +39,7 @@
             }
         }
 
-        public Position Position
-        {
-            get
-            {
-                return this.position;
-            }
-
-            set
-            {
-                if (value.X < 0 
-                    || value.Y < 0 
-                    || value.X >= GameEngine.MapWidth
-                    || value.Y >= GameEngine.MapHeight)
-                {
-                    throw new ObjectOutOfBoundsException("Specified coordinates are outside map.");
-                }
-
-                this.position = value;
-            }
-        }
+        public Position Position { get; set; }
 
         public MapMarkers MapMarker
         {
