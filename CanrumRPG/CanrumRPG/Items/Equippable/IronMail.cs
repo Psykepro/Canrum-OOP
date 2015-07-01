@@ -1,11 +1,13 @@
 ﻿namespace CanrumRPG.Items.Equippable
 {
+    using CanrumRPG.Attributes;
     using CanrumRPG.Engine;
 
-    public class IronMail : Equippable
+    [Treasure]
+    public class IronMail : Equipped
     {
         public IronMail(Position position)
-            : base(position, "Iron Mail", 0, 12, 0, 0)
+            : base(position, "IronMail", 0, 12, 0, 0)
         {
         }
     }

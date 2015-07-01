@@ -86,7 +86,6 @@
 
                 TargetPassiveSkillsCheck.Check(this, target, dmg);
                 AttackerPassiveSkillsCheck.Check(this, target);
-
             }
             else
             {

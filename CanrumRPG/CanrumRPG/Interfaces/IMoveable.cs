@@ -4,6 +4,6 @@
 
     public interface IMoveable
     {
-        void SetPlayerPosition(MoveDirection direction);
+        void SetPlayerPosition(MapCommands direction);
     }
 }

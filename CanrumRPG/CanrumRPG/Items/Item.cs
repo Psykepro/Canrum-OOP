@@ -28,5 +28,10 @@
         public int ManaModifier { get; set; }
 
         public Skills Type { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} - {1}\n+{2} AR, +{3} DR, +{4} H, +{5} M", this.Name, this.ItemState, this.AttackModifier, this.DefenseModifier, this.HealthModifier, this.ManaModifier);
+        }
     }
 }

@@ -42,17 +42,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\EnemyAttribute.cs" />
+    <Compile Include="Attributes\TreasureAttribute.cs" />
     <Compile Include="Characters\Character.cs" />
     <Compile Include="Characters\NPC.cs" />
     <Compile Include="Characters\Player.cs" />
     <Compile Include="Checkers\AttackerPassiveSkillsCheck.cs" />
     <Compile Include="Checkers\TargetPassiveSkillsCheck.cs" />
-    <Compile Include="Engine\EquipCommand.cs" />
     <Compile Include="Engine\GameEngine.cs" />
     <Compile Include="Engine\Resources.cs" />
+    <Compile Include="Enums\BattleCommands.cs" />
     <Compile Include="Enums\CharClass.cs" />
+    <Compile Include="Enums\MapCommands.cs" />
     <Compile Include="Enums\MapMarkers.cs" />
-    <Compile Include="Enums\MoveDirection.cs" />
+    <Compile Include="Enums\MoveCommands.cs" />
     <Compile Include="Enums\Race.cs" />
     <Compile Include="Enums\Skills.cs" />
     <Compile Include="Exceptions\NotEnoughBeerException.cs" />
@@ -67,14 +69,14 @@
     <Compile Include="Interfaces\IMoveable.cs" />
     <Compile Include="Interfaces\IRenderer.cs" />
     <Compile Include="Interfaces\ISkillModifiers.cs" />
-    <Compile Include="Items\Consumable.cs" />
+    <Compile Include="Items\Consumed.cs" />
     <Compile Include="Items\Consumable\ClarityPotion.cs" />
     <Compile Include="Items\Consumable\DevineWater.cs" />
     <Compile Include="Items\Consumable\FlaskOfSapphireWater.cs" />
     <Compile Include="Items\Consumable\HealingSalve.cs" />
     <Compile Include="Items\Consumable\MagisStone.cs" />
     <Compile Include="Items\Consumable\ManaStone.cs" />
-    <Compile Include="Items\Equippable.cs" />
+    <Compile Include="Items\Equipped.cs" />
     <Compile Include="Items\Equippable\AbbysalBlade.cs" />
     <Compile Include="Items\Equippable\AncientCrystalEdge.cs" />
     <Compile Include="Items\Equippable\BladesOfAttack.cs" />
@@ -127,7 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="CanrumRPG.cd" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="UI\ClassInfo\Mage.txt" />

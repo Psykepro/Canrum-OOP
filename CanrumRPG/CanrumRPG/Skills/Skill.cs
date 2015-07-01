@@ -28,8 +28,5 @@
         {
             return this.GetType().Name;
         }
-
     }
-
-    
 }

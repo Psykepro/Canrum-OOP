@@ -1,11 +1,13 @@
 ﻿namespace CanrumRPG.Characters
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using CanrumRPG.Engine;
     using CanrumRPG.Enums;
     using CanrumRPG.Interfaces;
+    using CanrumRPG.Items;
     using CanrumRPG.Skills;
 
     public class Player : Character, IMoveable
@@ -22,7 +24,6 @@
             this.skills = new Dictionary<int, Skill>();
             this.InitSkills();
             this.AddSkill();
-            this.FillInventory();
         }
 
         public int Level { get; private set; }
@@ -33,20 +34,20 @@
 
         private int LevelBoundary { get; set; }
         
-        public void SetPlayerPosition(MoveDirection direction)
+        public void SetPlayerPosition(MapCommands direction)
         {
             switch (direction)
             {
-                case MoveDirection.Up:
+                case MapCommands.Up:
                     this.Position = new Position(this.Position.X, this.Position.Y - 1);
                     break;
-                case MoveDirection.Down:
+                case MapCommands.Down:
                     this.Position = new Position(this.Position.X, this.Position.Y + 1);
                     break;
-                case MoveDirection.Right:
+                case MapCommands.Right:
                     this.Position = new Position(this.Position.X + 1, this.Position.Y);
                     break;
-                case MoveDirection.Left:
+                case MapCommands.Left:
                     this.Position = new Position(this.Position.X - 1, this.Position.Y);
                     break;
             }
@@ -55,7 +56,7 @@
         public override string ToString()
         {
             return string.Format(
-                "{0}: {1} {2} {9}\nAttack: {3}, Defense: {4}\nHealth: {5}/{6}\nMana: {7}/{8}", 
+                "{0}: level {9} {1} {2}\nAttack: {3}, Defense: {4}\nHealth: {5}/{6}\nMana: {7}/{8}\nExperience needed for next level: {10}", 
                 this.Name, 
                 this.Race, 
                 this.CharClass, 
@@ -63,11 +64,12 @@
                 this.DefenseRating, 
                 this.CurrentHealth, 
                 this.MaxHealth, 
-                this.CurrentMana, 
-                this.MaxMana, 
-                this.Level);
+                this.CurrentMana,
+                this.MaxMana,
+                this.Level,
+                this.LevelBoundary - this.Experience);
         }
-        
+
         public void GetPlayerExperience(int expGain)
         {
             this.Experience += expGain;
@@ -76,6 +78,63 @@
                 this.LevelBoundary *= 2;
                 this.Level++;
                 this.LevelUp();
+            }
+        }
+
+        public void ShowInventory()
+        {
+            if (this.Inventory.Count == 0)
+            {
+                GameEngine.Renderer.WriteLine("You don't have any items!");
+            }
+
+            foreach (var item in this.Inventory)
+            {
+                GameEngine.Renderer.WriteLine(item.ToString());
+            }
+        }
+
+        public void EquipItem(string name)
+        {
+            var items = from item in this.Inventory 
+                     where item.Name.Equals(name, StringComparison.OrdinalIgnoreCase) 
+                     select item;
+            items = items.ToList();
+
+            if (!items.Any())
+            {
+                GameEngine.Renderer.WriteLine("There's no eqippable item with that name in your inventory!");
+                return;
+            }
+
+            if (items.Any(i => i.ItemState == ItemState.Equipped))
+            {
+                GameEngine.Renderer.WriteLine("This item is already equipped!");
+            }
+            else
+            {
+                var equipment = (Equipped)items.First();
+                equipment.ItemState = ItemState.Equipped;
+                equipment.ApplyItemStats(this);
+            }
+        }
+
+        public void UseItem(string name, Character target)
+        {
+            var items = from item in this.Inventory
+                        where item.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
+                        select item;
+            items = items.ToList();
+
+            if (!items.Any())
+            {
+                GameEngine.Renderer.WriteLine("There's no consummable item with that name in your inventory!");
+            }
+            else
+            {
+                var potion = (Consumed)items.First();
+                potion.DefaultItemAction(this, target);
+                this.Inventory.Remove(potion);
             }
         }
 
@@ -116,11 +175,6 @@
             {
                 this.ActiveSkills.Add(this.skills[this.Level] as ActiveSkill);
             }
-        }
-
-        private void FillInventory()
-        {
-            // this is useless if we use equip command
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿namespace CanrumRPG.Items.Equippable
 {
+    using CanrumRPG.Attributes;
     using CanrumRPG.Engine;
 
-    public class AbbysalBlade : Equippable
+    [Treasure]
+    public class AbbysalBlade : Equipped
     {
         public AbbysalBlade(Position position)
-            : base(position, "Abbysal Blade", 23, 0, 0, 0)
+            : base(position, "AbbysalBlade", 23, 0, 0, 0)
         {
         }
     }

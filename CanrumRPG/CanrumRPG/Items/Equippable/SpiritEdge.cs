@@ -1,11 +1,13 @@
 ﻿namespace CanrumRPG.Items.Equippable
 {
+    using CanrumRPG.Attributes;
     using CanrumRPG.Engine;
 
-    public class SpiritEdge : Equippable
+    [Treasure]
+    public class SpiritEdge : Equipped
     {
         public SpiritEdge(Position position) 
-                    : base(position, "Spirit Edge", 28, 0, 0, 0)
+                    : base(position, "SpiritEdge", 28, 0, 0, 0)
         {
         }
     }

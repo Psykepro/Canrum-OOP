@@ -17,6 +17,5 @@
                 caster.DefenseRating += this.DefenseModifier / 2;
             }
         }
-
     }
 }

@@ -4,12 +4,13 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Text.RegularExpressions;
 
+    using CanrumRPG.Attributes;
     using CanrumRPG.Characters;
     using CanrumRPG.Enums;
-    using CanrumRPG.Exceptions;
     using CanrumRPG.Interfaces;
     using CanrumRPG.Items;
 
@@ -47,38 +48,47 @@
         {
             this.IsRunning = true;
 
+            Renderer.WriteLine("Welcome to Canrum's RPG!");
+            Renderer.WriteLine(File.ReadAllText("../../UI/HelpInfo.txt"));
+
             SetMapSize();
             
             this.player = new Player(GetPlayerName(), GetPlayerRace(), GetPlayerClass());
 
             this.PopulateEnemies();
             this.PopulateItems();
-
+            
             while (this.IsRunning)
             {
-                string command = Reader.ReadLine().ToLower();
+                string[] userInput = Regex.Split(Reader.ReadLine(), @"\s+");
 
-                try
+                if (userInput.Length > 2)
                 {
-                    this.ExecuteCommand(command);
+                    Renderer.WriteLine("No command has more than one parameter, please re-enter.");
+                    continue;
                 }
-                catch (ObjectOutOfBoundsException ex)
+
+                MapCommands command;
+
+                while (!Enum.TryParse(userInput[0], true, out command))
                 {
-                    Renderer.WriteLine(ex.Message);
+                    Renderer.WriteLine("Unknown command, please re-enter.");
+                    userInput = Regex.Split(Reader.ReadLine(), @"\s+");
                 }
-                catch (NotEnoughBeerException ex)
+
+                string parameter = "none";
+
+                if (userInput.Length == 2)
                 {
-                    Renderer.WriteLine(ex.Message);
+                     parameter = userInput[1];
                 }
-                catch (Exception ex)
-                {
-                    Renderer.WriteLine(ex.Message);
-                }
+                
+                this.ExecuteCommand(command, parameter);
 
                 if (this.creepsList.Count == 0)
                 {
                     this.IsRunning = false;
-                    Renderer.WriteLine("Valar morgulis!");
+                    Renderer.WriteLine("Congrats! You win!");
                 }
             }
         }
@@ -101,7 +111,6 @@
         {
             Renderer.WriteLine("Choose a class:");
             DirectoryInfo classInfo = new DirectoryInfo(@"..\..\UI\ClassInfo");
-            DirectoryInfo skillInfo = new DirectoryInfo(@"..\..\UI\SkillsInfo");
 
             foreach (var cl in classInfo.GetFiles())
             {
@@ -113,7 +122,7 @@
 
             while (!Enum.TryParse(choice, true, out charClass))
             {
-                Renderer.WriteLine("Invalid choice of race, please re-enter.");
+                Renderer.WriteLine("Invalid choice of class, please re-enter.");
                 choice = Reader.ReadLine();
             }
 
@@ -156,38 +165,110 @@
             return playerName;
         }
 
-        private void ExecuteCommand(string command)
+        private static void ExecuteHelpCommand()
+        {
+            string helpInfo = File.ReadAllText("../../UI/HelpInfo.txt");
+
+            Renderer.WriteLine(helpInfo);
+        }
+
+        private void ExecuteCommand(MapCommands command, string parameter)
         {
             switch (command)
             {
-                case "help":
-                    this.ExecuteHelpCommand();
+                case MapCommands.Help:
+                    ExecuteHelpCommand();
                     break;
-                case "map":
+                case MapCommands.Map:
                     this.PrintMap();
                     break;
-                case "left":
-                case "right":
-                case "up":
-                case "down":
-                    this.MovePlayer((MoveDirection)Enum.Parse(typeof(MoveDirection), command, true));
+                case MapCommands.Left:
+                case MapCommands.Right:
+                case MapCommands.Up:
+                case MapCommands.Down:
+                    this.MovePlayer(command);
                     break;
-                case "status":
+                case MapCommands.Status:
                     this.ShowStatus();
                     break;
-                case "clear":
+                case MapCommands.Clear:
                     Renderer.Clear();
                     break;
-                case "exit":
+                case MapCommands.Exit:
                     this.IsRunning = false;
                     Renderer.WriteLine("Bye, noob!");
                     break;
-                default:
-                    throw new ArgumentException("Unknown command", "command");
+                case MapCommands.Class:
+                    this.ShowClassInfo(parameter);
+                    break;
+                case MapCommands.Race:
+                    this.ShowRaceInfo(parameter);
+                    break;
+                case MapCommands.Inventory:
+                    this.player.ShowInventory();
+                    break;
+                case MapCommands.Equip:
+                    this.player.EquipItem(parameter);
+                    break;
             }
         }
-        
-        private void MovePlayer(MoveDirection direction)
+
+        private void ShowRaceInfo(string parameter)
+        {
+            Race race;
+            if (!Enum.TryParse(parameter, true, out race))
+            {
+                Renderer.WriteLine("This race does not exist, please re-enter.");
+            }
+            else
+            {
+                DirectoryInfo raceInfo = new DirectoryInfo(@"..\..\UI\RaceInfo");
+
+                parameter += ".txt";
+
+                foreach (var ra in raceInfo.GetFiles())
+                {
+                    if (ra.Name.Equals(parameter, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Renderer.WriteLine(ra.OpenText().ReadToEnd());
+                    }
+                }
+            }
+        }
+
+        private void ShowClassInfo(string parameter)
+        {
+            CharClass charClass;
+            if (!Enum.TryParse(parameter, true, out charClass))
+            {
+                Renderer.WriteLine("This class does not exist, please re-enter.");
+            }
+            else
+            {
+                DirectoryInfo classInfo = new DirectoryInfo(@"..\..\UI\ClassInfo");
+                DirectoryInfo skillsInfo = new DirectoryInfo(@"..\..\UI\SkillsInfo");
+
+                parameter += ".txt";
+
+                foreach (var cl in classInfo.GetFiles())
+                {
+                    if (cl.Name.Equals(parameter, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Renderer.WriteLine(cl.OpenText().ReadToEnd());
+                    }
+                }
+
+                foreach (var skill in skillsInfo.GetFiles())
+                {
+                    if (skill.Name.Equals(parameter, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Renderer.WriteLine(skill.OpenText().ReadToEnd());
+                    }
+                }
+            }
+        }
+
+        private void MovePlayer(MapCommands direction)
         {
             this.player.SetPlayerPosition(direction);
 
@@ -213,9 +294,10 @@
 
             if (item != null)
             {
-                EquipCommand.Equip(item, this.player);
+                this.player.Inventory.Add(item);
+                this.items.Remove(item);
                 item.ItemState = ItemState.Collected;
-                Renderer.WriteLine("Treasure collected!");
+                Renderer.WriteLine(string.Format("You have found a treasure - {0}!", item));
             }
         }
 
@@ -229,9 +311,9 @@
             {
                 Renderer.WriteLine(string.Format("Round {0}", round));
                 Renderer.WriteLine("Attack or use skill!");
-                string[] command = Regex.Split(Reader.ReadLine(), @"\s+");
-
-                this.ExecuteBattleCommand(command, enemy);
+                string[] userInput = Regex.Split(Reader.ReadLine(), @"\s+");
+                
+                this.ExecuteBattleCommand(userInput, enemy);
 
                 if (enemy.CurrentHealth <= 0)
                 {
@@ -254,41 +336,78 @@
             }
         }
         
-        private void ExecuteBattleCommand(string[] command, Character enemy)
+        private void ExecuteBattleCommand(string[] userInput, Character enemy)
         {
-            string[] internalCommand = command;
-            switch (internalCommand[0])
+            while (userInput.Length > 2)
             {
-                case "attack":
+                Renderer.WriteLine("No command has more than one parameter, please re-enter.");
+                userInput = Regex.Split(Reader.ReadLine(), @"\s+");
+            }
+
+            BattleCommands command;
+
+            while (!Enum.TryParse(userInput[0], true, out command))
+            {
+                Renderer.WriteLine("Unknown command, please re-enter.");
+                userInput = Regex.Split(Reader.ReadLine(), @"\s+");
+            }
+
+            string parameter = "none";
+
+            if (userInput.Length == 2)
+            {
+                parameter = userInput[1];
+            }
+
+            switch (command)
+            {
+                case BattleCommands.Help:
+                    ExecuteHelpCommand();
+                    userInput = Regex.Split(Reader.ReadLine(), @"\s+");
+                    this.ExecuteBattleCommand(userInput, enemy);
+                    break;
+                case BattleCommands.Clear:
+                    Renderer.Clear();
+                    userInput = Regex.Split(Reader.ReadLine(), @"\s+");
+                    this.ExecuteBattleCommand(userInput, enemy);
+                    break;
+                case BattleCommands.Exit:
+                    Environment.Exit(0);
+                    break;
+                case BattleCommands.Class:
+                    this.ShowClassInfo(parameter);
+                    userInput = Regex.Split(Reader.ReadLine(), @"\s+");
+                    this.ExecuteBattleCommand(userInput, enemy);
+                    break;
+                case BattleCommands.Race:
+                    this.ShowRaceInfo(parameter);
+                    userInput = Regex.Split(Reader.ReadLine(), @"\s+");
+                    this.ExecuteBattleCommand(userInput, enemy);
+                    break;
+                case BattleCommands.Inventory:
+                    this.player.ShowInventory();
+                    userInput = Regex.Split(Reader.ReadLine(), @"\s+");
+                    this.ExecuteBattleCommand(userInput, enemy);
+                    break;
+                case BattleCommands.Attack:
                     this.player.Attack(enemy, Rand);
                     break;
-                case "use":
-                    this.UsePlayerSkill(internalCommand[1].ToLower(), enemy);
+                case BattleCommands.Uses:
+                    this.UsePlayerSkill(parameter.ToLower(), enemy);
                     break;
-                case "help":
-                    this.ExecuteHelpCommand();
-                    internalCommand = Regex.Split(Reader.ReadLine(), @"\s+");
-                    this.ExecuteBattleCommand(internalCommand, enemy);
+                case BattleCommands.Usei:
+                    this.player.UseItem(parameter.ToLower(), enemy);
                     break;
-                case "enemy":
+                case BattleCommands.Enemy:
                     this.ShowEnemyStatus(enemy);
-                    internalCommand = Regex.Split(Reader.ReadLine(), @"\s+");
-                    this.ExecuteBattleCommand(internalCommand, enemy);
+                    userInput = Regex.Split(Reader.ReadLine(), @"\s+");
+                    this.ExecuteBattleCommand(userInput, enemy);
                     break;
-                case "status":
-                    this.ShowStatus();
-                    internalCommand = Regex.Split(Reader.ReadLine(), @"\s+");
-                    this.ExecuteBattleCommand(internalCommand, enemy);
+                case BattleCommands.Status:
+                    Renderer.WriteLine(this.player.ToString());
+                    userInput = Regex.Split(Reader.ReadLine(), @"\s+");
+                    this.ExecuteBattleCommand(userInput, enemy);
                     break;
-                case "clear":
-                    Renderer.Clear();
-                    break;
-                case "exit":
-                    this.IsRunning = false;
-                    Renderer.WriteLine("Bye, noob!");
-                    break;
-                default:
-                    throw new ArgumentException("Unknown command", "command");
             }
         }
 
@@ -342,7 +461,6 @@
                              && c.CurrentHealth > 0);
 
                     var item = this.items
-                        .Cast<Item>()
                         .FirstOrDefault(c => c.Position.X == col 
                             && c.Position.Y == row 
                             && c.ItemState == ItemState.Available);
@@ -366,13 +484,6 @@
             }
 
             Renderer.WriteLine(sb.ToString());
-        }
-
-        private void ExecuteHelpCommand()
-        {
-            string helpInfo = File.ReadAllText("../../UI/HelpInfo.txt");
-
-            Renderer.WriteLine(helpInfo);
         }
 
         private void PopulateItems()
@@ -408,7 +519,16 @@
                 .Any(e => e.Position.X == currentX && e.Position.Y == currentY);
             }
 
-            return new Item(new Position(currentX, currentY), "some item", Rand.Next(20), Rand.Next(20), Rand.Next(20), Rand.Next(20), Skills.Passive);
+            var treasures = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => t.IsClass)
+                .Where(t => t.CustomAttributes.Any(a => a.AttributeType == typeof(TreasureAttribute)))
+                .ToArray();
+
+            var treasure =
+                Activator.CreateInstance(treasures[Rand.Next(0, treasures.Length)], new Position(currentX, currentY)) as
+                Item;
+
+            return treasure;
         }
 
         private void PopulateEnemies()

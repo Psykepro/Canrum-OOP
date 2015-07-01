@@ -1,6 +1,6 @@
 ﻿namespace CanrumRPG.Enums
 {
-    public enum MoveDirection
+    public enum MoveCommands
     {
         Left, 
         Right, 

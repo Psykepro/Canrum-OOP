@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using CanrumRPG.Items;
+    using CanrumRPG.Items.Equippable;
     using CanrumRPG.Skills;
     using CanrumRPG.Skills.MageSkills;
     using CanrumRPG.Skills.NPCSkills;
@@ -55,7 +57,7 @@
                                                                new StoneSkin(), 
                                                                new ToughGuy()
                                                            };
-
+        
         public static readonly string[] CharacterNames =
         {
             "Alinar", 

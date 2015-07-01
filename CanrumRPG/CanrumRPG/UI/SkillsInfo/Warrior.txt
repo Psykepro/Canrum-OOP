@@ -29,3 +29,4 @@ Mana Cost : 70
 Cooldown : 7 secs
 Description : Almost cut into 2 pieces the target by dealing 230 damage.
 
+

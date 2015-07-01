@@ -2,18 +2,23 @@ Game objective: Kill everyone!!!
 
 Global commands:
 -help - displays basic game info and commands 
+-class [class name] - displays info about the specified character class
+-race [race name] - displays info about the specified character race
 -clear - clears the screen
 -exit - run like a little girl
+-inventory - lists all items in player's inventory
 
 Map commands:
 
 -map - displays the map
+-equip [item name] - equips the specified equippable item 
 -left, right, up, down - player movement
 -status - displays current player status and enemies left
 
 Battle commands:
 
--attack - uses the basic character attack on the enemy 
--use [skill name] - uses the specified active skill on the enemy/self
+-attack - uses the basic character attack on the enemy
+-usei [item name] - uses the specified consummable item 
+-uses [skill name] - uses the specified active skill on the enemy/self
 -enemy - displays information about the current enemy
 -status - displays info about the player's current battle status

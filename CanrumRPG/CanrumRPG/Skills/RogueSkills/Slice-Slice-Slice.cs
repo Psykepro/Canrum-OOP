@@ -15,9 +15,9 @@
 
         protected override void DefaultSkillAction(Character caster, Character target)
         {
-            Random rnd =new Random();
+            Random rnd = new Random();
             caster.CurrentMana -= this.ManaModifier;
-            for (int i = 0; i <=3 ; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 caster.Attack(target, rnd);
             }

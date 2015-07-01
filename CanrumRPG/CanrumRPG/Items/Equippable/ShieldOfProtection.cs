@@ -1,11 +1,13 @@
 ﻿namespace CanrumRPG.Items.Equippable
 {
+    using CanrumRPG.Attributes;
     using CanrumRPG.Engine;
 
-    public class ShieldOfProtection : Equippable
+    [Treasure]
+    public class ShieldOfProtection : Equipped
     {
         public ShieldOfProtection(Position position)
-            : base(position, "Shield Of Protection", 0, 12, 0, 0)
+            : base(position, "ShieldOfProtection", 0, 12, 0, 0)
         {
         }
     }

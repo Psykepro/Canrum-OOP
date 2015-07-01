@@ -1,16 +1,18 @@
 ﻿namespace CanrumRPG.Items.Consumable
 {
+    using CanrumRPG.Attributes;
     using CanrumRPG.Characters;
     using CanrumRPG.Engine;
 
-    public class ClarityPotion : Consumable
+    [Treasure]
+    public class ClarityPotion : Consumed
     {
         public ClarityPotion(Position position)
-            : base(position, "Clarity Potion", 0, 0, 0, 55)
+            : base(position, "ClarityPotion", 0, 0, 0, 55)
         {
         }
 
-        protected override void DefaultItemAction(Character caster, Character target)
+        public override void DefaultItemAction(Character caster, Character target)
         {
             caster.CurrentMana += this.ManaModifier;
             if (caster.CurrentMana > caster.MaxMana)

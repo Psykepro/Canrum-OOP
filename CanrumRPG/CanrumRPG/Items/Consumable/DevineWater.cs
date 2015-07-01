@@ -1,16 +1,18 @@
 ﻿namespace CanrumRPG.Items.Consumable
 {
+    using CanrumRPG.Attributes;
     using CanrumRPG.Characters;
     using CanrumRPG.Engine;
 
-    public class DevineWater : Consumable
+    [Treasure]
+    public class DevineWater : Consumed
     {
         public DevineWater(Position position)
-            : base(position, "Devine Water", 0, 0, 200, 200)
+            : base(position, "DevineWater", 0, 0, 200, 200)
         {
         }
 
-        protected override void DefaultItemAction(Character caster, Character target)
+        public override void DefaultItemAction(Character caster, Character target)
         {
             caster.CurrentMana += this.ManaModifier;
             caster.CurrentHealth += this.HealthModifier;
@@ -25,8 +27,12 @@
                 caster.CurrentHealth = caster.MaxHealth;
             }
 
-            GameEngine.Renderer.WriteLine("{0} used {1} regenerated {2} mana and {3} health.", caster.Name, 
-                this.GetType().Name, this.ManaModifier, this.HealthModifier);
+            GameEngine.Renderer.WriteLine(
+                "{0} used {1} regenerated {2} mana and {3} health.",
+                caster.Name,
+                this.GetType().Name,
+                this.ManaModifier,
+                this.HealthModifier);
         }
     }
 }
