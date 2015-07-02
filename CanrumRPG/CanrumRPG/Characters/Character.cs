@@ -125,7 +125,7 @@
                 this.DefenseRating -= Dr / 8;
                 this.CritChance -= Cc / 8;
                 this.BlockChance -= Bc / 8;
-                this.MaxHealth -= Mh / 8;
+                this.MaxHealth += Mh * 3;
                 this.MaxMana -= Mm / 8;
             }
 
