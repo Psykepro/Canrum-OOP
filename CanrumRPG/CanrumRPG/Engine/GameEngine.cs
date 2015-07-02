@@ -372,6 +372,8 @@
                     this.ExecuteBattleCommand(userInput, enemy);
                     break;
                 case BattleCommands.Exit:
+                    this.IsRunning = false;
+                    Renderer.WriteLine("Bye, noob!");
                     Environment.Exit(0);
                     break;
                 case BattleCommands.Class:
